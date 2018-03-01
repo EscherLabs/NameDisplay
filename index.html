@@ -10,18 +10,38 @@
     <link rel="stylesheet" href="css/bootstrap.min.css">
     <link rel="stylesheet" href="css/toastr.min.css">
     <link rel="stylesheet" href="css/bing-font.css">
-    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/master.css">
   </head>
   <body>
-    <video id="preview"></video>
-    <div id="bottom" class="row">
-      <div id="logo" class="col-xs-2">
-        <div class="bu-b-color">
-          <span class="path1"></span><span class="path2"></span><span class="path3"></span>
+    <div class="row" style="background-color:white;">
+      <div class="col-sm-6" style="font-size:18px;text-align:center;padding:30px;">
+        <h1>Info</h1>
+        <div>Note: Please use the button below to launch the display window.  
+        You will need to drag this window over to the screen which 
+        will be projected.</div>
+        <btn class="btn btn-primary" id="open-display-btn">Open Display</btn>
+        <div>
+          <br><br>The preview areas below show the person who is currently being displayed
+          as well as the next person who will be displayed.
         </div>
       </div>
-      <div id="person-info" class="col-xs-10"></div>
+      <div class="col-sm-6">
+        <video id="video-preview"></video>
+      </div>
     </div>
-    <script type="text/javascript" src="js/main.js"></script>
+    <div class="row">
+      <div class="col-sm-6 preview-screen">
+        <h1>Current Person</h1>
+        <div class="person-preview" id="current-person-preview"></div>
+      </div>
+      <div class="col-sm-6 preview-screen">
+        <h1>Next Person</h1>
+        <div class="person-preview" id="next-person-preview"></div>
+      </div>
+    </div>
+  
+    
+
+    <script type="text/javascript" src="js/master.js"></script>
   </body>
 </html>

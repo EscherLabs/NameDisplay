@@ -3,7 +3,7 @@ function beep() {
     snd.play();
 }
 
-let scanner = new Instascan.Scanner({ video: document.getElementById('preview') });
+let scanner = new Instascan.Scanner({ video: document.getElementById('video-preview') });
 
 scanner.addListener('scan', function (content) {
     toastr.info('QR Code Scanned')
@@ -11,11 +11,13 @@ scanner.addListener('scan', function (content) {
     console.log(content);
     try {
         person_info = JSON.parse(content)
-        update_screen(person_info);
-        // setTimeout(function(){
-        //     toastr.info('Reverting Back to Default (Demo Mode)')
-        //     update_screen({"name":"{{name}}","major":"{{major}}"})
-        // }, 5000);
+        var rendered_text = Mustache.render("<h1>{{name}}</h1><h2>{{major}}</h2>", person_info);
+        $('#next-person-preview').html(rendered_text);
+        setTimeout(function(){
+            __CHILD_WINDOW_HANDLE.ProcessParentMessage(rendered_text);
+            $('#current-person-preview').html(rendered_text);
+            $('#next-person-preview').html("");
+        },3000)
     } catch (e) {
         toastr.error('Error with QR Code')
     }
@@ -31,15 +33,15 @@ Instascan.Camera.getCameras().then(function (cameras) {
     console.error(e);
 });
 
-update_screen = function(person_info) {
-    toastr.success('Updating Person Info')
-    var rendered_text = Mustache.render("<h1>{{name}}</h1><h2>{{major}}</h2>", person_info);
-    document.getElementById("person-info").innerHTML = rendered_text;    
-}
 
 toastr.options = {
     "positionClass": "toast-top-left",
     "timeOut": "2000",
 }
 
-update_screen({"name":"{{name}}","major":"{{major}}"})
+
+var __CHILD_WINDOW_HANDLE = null;
+$("#open-display-btn").on('click', function() {
+	__CHILD_WINDOW_HANDLE = window.open('display.html', '_blank', 'width=700,height=500,left=200,top=100');
+});
+

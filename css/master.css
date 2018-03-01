@@ -1,0 +1,29 @@
+body {
+    background-color:#005A43;
+}
+
+video#preview {
+    /* position:absolute;
+    top:0;
+    right:0; */
+    width:100%;
+}
+
+#person-info {
+    text-align:center;
+    color:white;
+    font-family:sans-serif;
+}
+
+.preview-screen {
+    text-align:center;
+    color:white;
+
+}
+
+.person-preview h1 {
+    font-size:60px;
+}
+.person-preview h2 {
+    font-size:40px;
+}
