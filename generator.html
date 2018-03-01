@@ -35,7 +35,7 @@
     <script>
 
 
-      var qrcode = new QRCode("qrcode");
+      var qrcode = new QRCode(document.getElementById("qrcode"),{correctLevel : QRCode.CorrectLevel.L});
 
       $( "form" ).submit(function( event ) {
         var data = $( "form" ).serializeArray();
