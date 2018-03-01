@@ -10,14 +10,18 @@ scanner.addListener('scan', function (content) {
     beep();
     console.log(content);
     try {
-        person_info = JSON.parse(content)
-        var rendered_text = Mustache.render("<h1>{{name}}</h1><h2>{{major}}</h2>", person_info);
-        $('#next-person-preview').html(rendered_text);
-        setTimeout(function(){
-            __CHILD_WINDOW_HANDLE.ProcessParentMessage(rendered_text);
-            $('#current-person-preview').html(rendered_text);
-            $('#next-person-preview').html("");
-        },3000)
+        if (__CHILD_WINDOW_HANDLE === null) {
+            toastr.error('You must open the Display Window!');
+        } else {
+            person_info = JSON.parse(content)
+            var rendered_text = Mustache.render("<h1>{{name}}</h1><h2>{{major}}</h2>", person_info);
+            $('#next-person-preview').html(rendered_text);
+            setTimeout(function(){
+                __CHILD_WINDOW_HANDLE.ProcessParentMessage(rendered_text);
+                $('#current-person-preview').html(rendered_text);
+                $('#next-person-preview').html("");
+            },3000)
+        }
     } catch (e) {
         toastr.error('Error with QR Code')
     }
