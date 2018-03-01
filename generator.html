@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Instascan</title>
+    <script type="text/javascript" src="js/jquery.min.js"></script>
+    <script type="text/javascript" src="js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+  </head>
+  <body>
+    <div class="container">
+        <form>
+                <div class="form-group">
+                  <label for="name">Name</label>
+                  <input type="text" class="form-control" name="name" id="name" placeholder="Name">
+                </div>
+                <div class="form-group">
+                  <label for="major">Major</label>
+                  <input type="text" class="form-control" name="major" id="major" placeholder="Major">
+                </div>
+                <button type="submit" class="btn btn-default">Submit</button>
+              </form>
+    </div>
+
+    <script>
+      $( "form" ).submit(function( event ) {
+        var data = $( "form" ).serializeArray();
+        event.preventDefault();
+        var mydata = {};
+        for(i=0;i<data.length;i++) {
+          if (data[i].name === "name") {
+            mydata.name = data[i].value
+          } else if (data[i].name === "major") {
+            mydata.major = data[i].value
+          }
+        }
+        window.location = "https://api.qrserver.com/v1/create-qr-code/?data="+JSON.stringify(mydata)
+      });
+    </script>
+  </body>
+</html>
+
