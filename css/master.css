@@ -14,16 +14,17 @@ video#preview {
     color:white;
     font-family:sans-serif;
 }
-
 .preview-screen {
     text-align:center;
     color:white;
 
 }
-
 .person-preview h1 {
     font-size:60px;
 }
 .person-preview h2 {
     font-size:40px;
+}
+#upcoming-queue {
+    color:black;
 }

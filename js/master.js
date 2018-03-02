@@ -5,6 +5,8 @@ function beep() {
 
 let scanner = new Instascan.Scanner({ video: document.getElementById('video-preview') });
 
+displayQueue = [];
+
 scanner.addListener('scan', function (content) {
     toastr.info('QR Code Scanned')
     beep();
@@ -15,17 +17,27 @@ scanner.addListener('scan', function (content) {
         } else {
             person_info = JSON.parse(content)
             var rendered_text = Mustache.render("<h1>{{name}}</h1><h2>{{major}}</h2>", person_info);
-            $('#next-person-preview').html(rendered_text);
-            setTimeout(function(){
-                __CHILD_WINDOW_HANDLE.ProcessParentMessage(rendered_text);
-                $('#current-person-preview').html(rendered_text);
-                $('#next-person-preview').html("");
-            },3000)
+            displayQueue.push({"person_info":person_info,"rendered_text":rendered_text})
+            updateQueue();
         }
     } catch (e) {
         toastr.error('Error with QR Code')
     }
 });
+
+// Detect Space Bar Event
+$(window).keypress(function (e) {
+    if (e.keyCode === 0 || e.keyCode === 32) {
+        e.preventDefault()
+        person = displayQueue.shift()
+        if (typeof person === 'undefined') {
+            person = {'rendered_text':''};
+        }
+        setDisplay(person.rendered_text)
+        $('#current-person-preview').html(person.rendered_text);
+        updateQueue();
+    }
+})
 
 Instascan.Camera.getCameras().then(function (cameras) {
     if (cameras.length > 0) {
@@ -43,9 +55,16 @@ toastr.options = {
     "timeOut": "2000",
 }
 
-
 var __CHILD_WINDOW_HANDLE = null;
 $("#open-display-btn").on('click', function() {
 	__CHILD_WINDOW_HANDLE = window.open('display.html', '_blank', 'width=700,height=500,left=200,top=100');
 });
+setDisplay = function(message) {
+    __CHILD_WINDOW_HANDLE.ProcessParentMessage(message);
+}
 
+updateQueue = function() {
+    queueTemplate = '<ul class="list-group">{{#.}}<li class="list-group-item">{{person_info.name}} - {{person_info.major}}</li>{{/.}}</ul>';
+    var queueHTML = Mustache.render(queueTemplate, displayQueue);
+    $('#upcoming-queue').html(queueHTML);
+}
