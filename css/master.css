@@ -60,4 +60,5 @@ video {
 }
 .list-group {
     overflow:scroll;
+    max-height: 35vh;
 }
