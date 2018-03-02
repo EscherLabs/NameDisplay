@@ -1,12 +1,42 @@
+#top-left {
+    position: absolute;
+    left: 0px;
+    top: 0px;
+    width: 50%;
+    height: 50%;
+    background-color:white;
+}
+#top-right {
+    position: absolute;
+    right: 0px;
+    top: 0px;
+    width: 50%;
+    height: 50%;
+    background-color:white;
+}
+#bottom-left {
+    position: absolute;
+    left: 0px;
+    bottom: 0px;
+    width: 50%;
+    height: 50%;
+}
+#bottom-right {
+    position: absolute;
+    right: 0px;
+    bottom: 0px;
+    width: 50%;
+    height: 50%;
+}
+
 body {
     background-color:#005A43;
 }
 
-video#preview {
-    /* position:absolute;
-    top:0;
-    right:0; */
-    width:100%;
+video {
+    height:100%;
+    position:absolute;
+    right:0px;
 }
 
 #person-info {
@@ -27,4 +57,7 @@ video#preview {
 }
 #upcoming-queue {
     color:black;
+}
+.list-group {
+    overflow:scroll;
 }
