@@ -7,37 +7,48 @@ let scanner = new Instascan.Scanner({ video: document.getElementById('video-prev
 
 displayQueue = [];
 
+assert_child_window = function() {
+    if (__CHILD_WINDOW_HANDLE === null) {
+        toastr.error('You must open the Display Window!');
+        return false;
+    }
+    return true;
+}
+
 scanner.addListener('scan', function (content) {
     toastr.info('QR Code Scanned')
     beep();
     console.log(content);
     try {
-        if (__CHILD_WINDOW_HANDLE === null) {
-            toastr.error('You must open the Display Window!');
-        } else {
-            person_info = JSON.parse(content)
-            var rendered_text = Mustache.render("<h1>{{name}}</h1><h2>{{major}}</h2>", person_info);
-            displayQueue.push({"person_info":person_info,"rendered_text":rendered_text})
-            updateQueue();
-        }
+        assert_child_window();
+        person_info = JSON.parse(content)
+        var rendered_text = Mustache.render("<h1>{{name}}</h1><h2>{{major}}</h2>", person_info);
+        displayQueue.push({"person_info":person_info,"rendered_text":rendered_text})
+        updateQueue();
     } catch (e) {
         toastr.error('Error with QR Code')
     }
 });
 
-// Detect Space Bar Event
-$(window).keypress(function (e) {
-    if (e.keyCode === 0 || e.keyCode === 32) {
+// Detect Right Arrow Key Event
+
+document.onkeydown = checkKey;
+
+function checkKey(e) {
+    e = e || window.event;
+    if (e.keyCode == '39') {
         e.preventDefault()
-        person = displayQueue.shift()
-        if (typeof person === 'undefined') {
-            person = {'rendered_text':''};
+        if (assert_child_window()) {
+            person = displayQueue.shift()
+            if (typeof person === 'undefined') {
+                person = {'rendered_text':''};
+            }
+            setDisplay(person.rendered_text)
+            $('#current-person-preview').html(person.rendered_text);
+            updateQueue();
         }
-        setDisplay(person.rendered_text)
-        $('#current-person-preview').html(person.rendered_text);
-        updateQueue();
     }
-})
+}
 
 Instascan.Camera.getCameras().then(function (cameras) {
     if (cameras.length > 0) {
@@ -68,3 +79,15 @@ updateQueue = function() {
     var queueHTML = Mustache.render(queueTemplate, displayQueue);
     $('#upcoming-queue').html(queueHTML);
 }
+
+entry_form = $('#myForm').berry({
+    fields: [
+      {label: 'Name',name:'name',type:'text'}, 
+      {label: 'Major',name:'major',type:'text'}
+    ],actions: [
+        'save'
+    ]}).on('save',function(model) {
+        var rendered_text = Mustache.render("<h1>{{name}}</h1><h2>{{major}}</h2>", entry_form.toJSON());
+        displayQueue.push({"person_info":entry_form.toJSON(),"rendered_text":rendered_text})
+        updateQueue();
+    });

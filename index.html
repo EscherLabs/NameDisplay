@@ -1,27 +1,34 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Instascan</title>
+    <title>Main Controller | Commencement Display</title>
     <script type="text/javascript" src="js/jquery.min.js"></script>
     <script type="text/javascript" src="js/instascan.min.js"></script>
     <script type="text/javascript" src="js/mustache.min.js"></script>
     <script type="text/javascript" src="js/toastr.min.js"></script>
     <script type="text/javascript" src="js/bootstrap.min.js"></script>
+    <script type="text/javascript" src='js/hogan-3.0.1.js'></script>
+
+    <script type="text/javascript" src='js/bootstrap.full.berry.js'></script>
+    <script type="text/javascript" src='js/full.berry.js'></script>
+
     <link rel="stylesheet" href="css/bootstrap.min.css">
     <link rel="stylesheet" href="css/toastr.min.css">
     <link rel="stylesheet" href="css/bing-font.css">
     <link rel="stylesheet" href="css/master.css">
   </head>
   <body>
-      <div id="top-left" class="quadrant" style="font-size:18px;text-align:center;padding:30px;">
-        <h1>Info</h1>
-        <div>Note: Please use the button below to launch the display window.  
-        You will need to drag this window over to the screen which 
-        will be projected.</div>
-        <btn class="btn btn-primary" id="open-display-btn">Open Display Window</btn>
-        <div>
-          <br><br>Use the space bar to advance to the next person in the queue.
+      <div id="top-left" class="quadrant" style="font-size:18px;padding:30px;">
+        <h3>Instructions</h3>
+        <div>Open the "Display Window" and move it to the second screen.  
+          Scan QR Codes (or use the manual entry form) to populate the queue, 
+          and use the Right Arrow Key to advance to the next person. 
         </div>
+        <div style="text-align:right;">
+          <btn class="btn btn-primary" id="open-display-btn">Open Display Window</btn>
+        </div>
+        <h3>Manual Entry</h3>
+        <div id="myForm"></div>
       </div>
       <div id="top-right" class="quadrant">
         <video id="video-preview"></video>
@@ -34,8 +41,6 @@
         <h1>Upcoming Queue</h1>
         <div id="upcoming-queue"></div>
       </div>
-  
-    
 
     <script type="text/javascript" src="js/master.js"></script>
   </body>
