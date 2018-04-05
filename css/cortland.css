@@ -1,0 +1,15 @@
+#logo .bu-b-color {
+    display:none;
+}
+
+#bottom {
+    background-color:#b91000;
+}
+
+#logo img {
+    content: url(../images/cortland_logo.gif);
+    width: 200px;
+    position: fixed;
+    bottom: 10px;
+    left: 10px;
+}
