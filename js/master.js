@@ -6,6 +6,8 @@ function beep() {
 let scanner = new Instascan.Scanner({ video: document.getElementById('video-preview') });
 
 displayQueue = [];
+// displayQueue = [{"name":"first","major":"","guid":"07f0805c-44bf-4be0-a6c9-019909257fbc"},{"name":"second","major":"","guid":"35145150-095b-4a70-b3a8-0b79bc18b1e7"},{"name":"third","major":"","guid":"4d14d6e9-c250-48ad-8471-a2919d929e53"}];
+displayBuffer = [];
 
 assert_child_window = function() {
     // if (__CHILD_WINDOW_HANDLE === null) {
@@ -61,52 +63,88 @@ scanner.addListener('scan', function (content) {
 });
 
 
+fields = [
+        {label: 'Name'}, 
+        {label: 'Major'}
+    ]
+function ProcessChildMessage(e) { checkKey(e) }
+
 // Detect Right Arrow Key Event
 
 document.onkeydown = checkKey;
 
 function checkKey(e) {
     e = e || window.event;
-    if (e.keyCode == '39') {
+    switch(e.keyCode){
+    case 39:
         e.preventDefault()
         if (assert_child_window()) {
-            
-// debugger;
-    // setDisplay(_.remove($('ul li')[0].dataset)[0] || {})
-    // updateQueue();
-
             setDisplay(displayQueue.shift() || {})
             updateQueue();
         }
-    }
+        break;
+    case 37:
+        e.preventDefault()
+        if (assert_child_window()) {
+            var item = displayBuffer.shift();
+            if(typeof item !== 'undefined'){
+                displayQueue.unshift(item)
+                updateQueue();
+                var old = displayBuffer.shift();
+                    setDisplay(old || {})
+            }else{
+                 setDisplay({})
+            }
+        }		
+    case 13://enter
+
+        e.preventDefault();
+        e.stopPropagation();
+        
+        // $('#myForm').find('[data-id=berry-submit]').click();
+        Berries.form.trigger('save');
+        break;
+    }			
 }
 $('body').on('click','li',function(e){
-
-//   _.find(displayQueue,e.currentTarget.dataset)
-
-
     setDisplay(_.remove(displayQueue,e.currentTarget.dataset)[0] || {})
     updateQueue();
-
-
 })
+
 $('body').on('click','.remove',function(e){
-e.stopPropagation();
-//   _.find(displayQueue,e.currentTarget.dataset)
-
-
-_.remove(displayQueue,e.currentTarget.parentElement.dataset)
+    e.stopPropagation();
+    _.remove(displayQueue,e.currentTarget.parentElement.dataset)
     updateQueue();
+})
+
+$('body').on('click','.edit',function(e){
+    e.stopPropagation();
+    var  editFields = [];
+    $.extend(true, editFields,fields);
+    editFields.push({name:'guid',type:'hidden'})
+    $().berry({
+        legend:'Edit Person info',
+        attributes:_.find(displayQueue,e.currentTarget.parentElement.dataset),
+        fields: editFields,
+        actions: ['save']
+    }).on('save',function() {
+    $.extend(_.find(displayQueue,e.currentTarget.parentElement.dataset),this.toJSON())
+            updateQueue();
+            this.trigger('close');
+    });
 
 
 })
 
 
 setDisplay = function(data) {
-     var rendered_text = Mustache.render("<h1>{{name}}</h1><h2>{{major}}</h2>", data);
-     if (__CHILD_WINDOW_HANDLE !== null) {
+    if(typeof data.guid !== 'undefined'){
+        displayBuffer.unshift(data);
+    }
+    var rendered_text = Mustache.render("<h1>{{name}}</h1><h2>{{major}}</h2>", data);
+    if (__CHILD_WINDOW_HANDLE !== null) {
         __CHILD_WINDOW_HANDLE.ProcessParentMessage(rendered_text);
-     }
+    }
     $('#current-person-preview').html(rendered_text);
 }
 
@@ -116,10 +154,10 @@ updateQueue = function(item) {
         data.guid = generateUUID();
         displayQueue.push(item);
     }
-    queueTemplate = '<ul class="list-group">{{#.}}<li data-guid="{{guid}}" class="list-group-item"><div class="handle"></div>{{name}} - {{major}}<div class="btn btn-danger parent-hover pull-right remove"><i class="fa fa-times"></i></div></li>{{/.}}</ul>';
+    queueTemplate = '<ul class="list-group">{{#.}}<li data-guid="{{guid}}" class="list-group-item"><div class="handle"></div>{{name}} - {{major}}<div class="btn btn-danger parent-hover pull-right remove"><i class="fa fa-times"></i></div><div class="btn btn-info parent-hover pull-right edit"><i class="fa fa-pencil"></i></div></li>{{/.}}</ul>';
     var queueHTML = Mustache.render(queueTemplate, displayQueue);
     $('#upcoming-queue').html(queueHTML);
-    var sortable = new Sortable($('ul')[0],{onSort: function (/**Event*/evt) {
+    var sortable = new Sortable($('ul')[0],{handle:'.handle',onSort: function (/**Event*/evt) {
 		// same properties as onEnd
         var list = _.map($('ul li'),function(item){
             return item.dataset.guid
@@ -133,12 +171,14 @@ updateQueue = function(item) {
 }
 
 $('#myForm').berry({
-    fields: [
-        {label: 'Name',name:'name',type:'text'}, 
-        {label: 'Major',name:'major',type:'text'}
-    ],
-    actions: ['save']
+    default:{columns:6},
+    name:'form',
+    fields: fields,
+    actions: false,
 }).on('save',function() {
-    updateQueue(this.toJSON());
-    this.populate({name:'',major:''})
+    if(this.toJSON().name !== '' || this.toJSON().major !== ''){
+        updateQueue(this.toJSON());
+        this.populate({name:'',major:''})
+        this.fields.name.focus();
+    }
 });

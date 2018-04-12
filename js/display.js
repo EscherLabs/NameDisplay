@@ -11,7 +11,8 @@ document.onkeydown = checkKey;
 
 function checkKey(e) {
     e = e || window.event;
-    if (typeof schools[e.keyCode] !== undefined) {
+		debugger;
+    if (typeof schools[e.keyCode] !== 'undefined') {
 		e.preventDefault()
 		var fileref = document.createElement("link");
 		fileref.rel = "stylesheet";
@@ -22,5 +23,9 @@ function checkKey(e) {
 		$('body').append(fileref);
 		// document.getElementsByClassName("school_style").remove();
 		// document.getElementsByTagName("head")[0].appendChild(fileref)
-    }
+    }else{
+			window.opener.ProcessChildMessage(e);
+		}
+
+
 }

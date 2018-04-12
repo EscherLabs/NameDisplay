@@ -1340,6 +1340,7 @@ Berry.renderers = {
 		this.owner = owner;
 		this.initialize = function() {
 			$(this.owner.$el).keydown($.proxy(function(event) {
+				debugger;
 				switch(event.keyCode) {
 					case 27://escape
 						$('#close').click();

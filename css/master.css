@@ -7,12 +7,12 @@ h1 {
     color:#999
 }
 
-#top-left {
+#left {
     left: 0px;
     top: 0px;
     width: 50%;
-    height: 50%;
-    border-width: 0px 5px 5px 0px;
+    height: 100%;
+    border-width: 0px 5px 0px 0px;
     overflow:scroll;
 }
 #top-right {
@@ -39,7 +39,7 @@ h1 {
 
 body {
     background-color:#333;
-    color:#ddd;
+    color:#777;
 }
 
 video {
@@ -59,7 +59,7 @@ h3 {
     font-family:sans-serif;
 }
 .preview-screen {
-    text-align:center;
+    /*text-align:center;*/
     /* color:#ddd; */
 
 }
@@ -73,10 +73,18 @@ h3 {
 }
 #upcoming-queue {
     color:black;
+    position:relative;
 }
 .list-group {
     overflow:scroll;
-    max-height: 35vh;
+    /*max-height: 35vh;*/
+    position:fixed;
+    top:100px;
+    bottom:10px;
+    left:0px;
+    /*right:10px;*/
+    width:50%;
+    padding:0 10px;
 }
 
 .list-group-item .handle{color:#aaa;width: 45px;background:#fcfdfc;text-align:center;border-right: solid 1px #eee;cursor:move;padding-top: 18px;padding-bottom: 18px;margin: -10px 20px -10px -15px;display: inline-block;font:normal normal normal 14px/1 FontAwesome;font-size:inherit;text-rendering:auto;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}

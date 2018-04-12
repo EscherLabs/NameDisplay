@@ -22,26 +22,24 @@
     <link rel="stylesheet" href="css/master.css">
   </head>
   <body>
-      <div id="top-left" class="quadrant" style="font-size:18px;padding:30px;">
+      <div id="left" class="" style="font-size:18px;padding:30px;">
+
+        <div id="myForm"></div>
+
+          <div id="upcoming-queue"></div>
+      </div>
+      <div id="top-right" class="quadrant">
+
+        <video id="video-preview"></video>
+      </div>
+      <div id="bottom-right" class="quadrant preview-screen">
+        <btn class="btn btn-primary pull-right" id="open-display-btn">Open Display Window</btn>
+
         <h3>Instructions</h3>
         <div>Open the "Display Window" and move it to the second screen.  
           Scan QR Codes (or use the manual entry form) to populate the queue, 
           and use the Right Arrow Key to advance to the next person. 
         </div>
-        <div style="text-align:right;">
-          <btn class="btn btn-primary" id="open-display-btn">Open Display Window</btn>
-        </div>
-        <h3>Manual Entry</h3>
-        <div id="myForm"></div>
-      </div>
-      <div id="top-right" class="quadrant">
-        <video id="video-preview"></video>
-      </div>
-      <div id="bottom-left" class="quadrant">
-          <h1>Upcoming Queue</h1>
-          <div id="upcoming-queue"></div>
-      </div>
-      <div id="bottom-right" class="quadrant preview-screen">
         <h1>Current Person</h1>
         <div class="person-preview" id="current-person-preview"></div>
       </div>
