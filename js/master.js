@@ -8,47 +8,14 @@ let scanner = new Instascan.Scanner({ video: document.getElementById('video-prev
 displayQueue = [];
 
 assert_child_window = function() {
-    if (__CHILD_WINDOW_HANDLE === null) {
-        toastr.error('You must open the Display Window!');
-        return false;
-    }
+    // if (__CHILD_WINDOW_HANDLE === null) {
+    //     toastr.error('You must open the Display Window!');
+    //     return false;
+    // }
     return true;
 }
 
-scanner.addListener('scan', function (content) {
-    toastr.info('QR Code Scanned')
-    beep();
-    console.log(content);
-    try {
-        assert_child_window();
-        person_info = JSON.parse(content)
-        var rendered_text = Mustache.render("<h1>{{name}}</h1><h2>{{major}}</h2>", person_info);
-        displayQueue.push({"person_info":person_info,"rendered_text":rendered_text})
-        updateQueue();
-    } catch (e) {
-        toastr.error('Error with QR Code')
-    }
-});
 
-// Detect Right Arrow Key Event
-
-document.onkeydown = checkKey;
-
-function checkKey(e) {
-    e = e || window.event;
-    if (e.keyCode == '39') {
-        e.preventDefault()
-        if (assert_child_window()) {
-            person = displayQueue.shift()
-            if (typeof person === 'undefined') {
-                person = {'rendered_text':''};
-            }
-            setDisplay(person.rendered_text)
-            $('#current-person-preview').html(person.rendered_text);
-            updateQueue();
-        }
-    }
-}
 
 Instascan.Camera.getCameras().then(function (cameras) {
     if (cameras.length > 0) {
@@ -70,24 +37,97 @@ var __CHILD_WINDOW_HANDLE = null;
 $("#open-display-btn").on('click', function() {
 	__CHILD_WINDOW_HANDLE = window.open('display.html', '_blank', 'width=700,height=500,left=200,top=100');
 });
-setDisplay = function(message) {
-    __CHILD_WINDOW_HANDLE.ProcessParentMessage(message);
+
+function generateUUID(){
+    var d = new Date().getTime();
+    var uuid = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+        var r = (d + Math.random()*16)%16 | 0;
+        d = Math.floor(d/16);
+        return (c=='x' ? r : (r&0x3|0x8)).toString(16);
+    });
+    return uuid;
+};
+
+
+scanner.addListener('scan', function (content) {
+    toastr.info('QR Code Scanned')
+    beep();
+    try {
+        // assert_child_window();
+        updateQueue(JSON.parse(content));
+    } catch (e) {
+        toastr.error('Error with QR Code')
+    }
+});
+
+
+// Detect Right Arrow Key Event
+
+document.onkeydown = checkKey;
+
+function checkKey(e) {
+    e = e || window.event;
+    if (e.keyCode == '39') {
+        e.preventDefault()
+        if (assert_child_window()) {
+            
+// debugger;
+    // setDisplay(_.remove($('ul li')[0].dataset)[0] || {})
+    // updateQueue();
+
+            setDisplay(displayQueue.shift() || {})
+            updateQueue();
+        }
+    }
+}
+$('body').on('click','li',function(e){
+
+//   _.find(displayQueue,e.currentTarget.dataset)
+
+
+    setDisplay(_.remove(displayQueue,e.currentTarget.dataset)[0] || {})
+    updateQueue();
+
+
+})
+
+setDisplay = function(data) {
+     var rendered_text = Mustache.render("<h1>{{name}}</h1><h2>{{major}}</h2>", data);
+     if (__CHILD_WINDOW_HANDLE !== null) {
+        __CHILD_WINDOW_HANDLE.ProcessParentMessage(rendered_text);
+     }
+    $('#current-person-preview').html(rendered_text);
 }
 
-updateQueue = function() {
-    queueTemplate = '<ul class="list-group">{{#.}}<li class="list-group-item">{{person_info.name}} - {{person_info.major}}</li>{{/.}}</ul>';
+updateQueue = function(item) {
+    if(typeof item !== 'undefined'){
+        var data = item;
+        data.guid = generateUUID();
+        displayQueue.push(item);
+    }
+    queueTemplate = '<ul class="list-group">{{#.}}<li data-guid="{{guid}}" class="list-group-item"><div class="handle"></div>{{name}} - {{major}}</li>{{/.}}</ul>';
     var queueHTML = Mustache.render(queueTemplate, displayQueue);
     $('#upcoming-queue').html(queueHTML);
+    var sortable = new Sortable($('ul')[0],{onSort: function (/**Event*/evt) {
+		// same properties as onEnd
+        var list = _.map($('ul li'),function(item){
+            return item.dataset.guid
+        })
+
+        displayQueue = _.sortBy(displayQueue, function(item){
+            return list.indexOf(item.guid)
+        });
+
+    }})
 }
 
-entry_form = $('#myForm').berry({
+$('#myForm').berry({
     fields: [
-      {label: 'Name',name:'name',type:'text'}, 
-      {label: 'Major',name:'major',type:'text'}
-    ],actions: [
-        'save'
-    ]}).on('save',function(model) {
-        var rendered_text = Mustache.render("<h1>{{name}}</h1><h2>{{major}}</h2>", entry_form.toJSON());
-        displayQueue.push({"person_info":entry_form.toJSON(),"rendered_text":rendered_text})
-        updateQueue();
-    });
+        {label: 'Name',name:'name',type:'text'}, 
+        {label: 'Major',name:'major',type:'text'}
+    ],
+    actions: ['save']
+}).on('save',function() {
+    updateQueue(this.toJSON());
+    this.populate({name:'',major:''})
+});
