@@ -84,3 +84,6 @@ h3 {
 .list-group-item .handle:before{
       content: "\f0c9";
 }
+
+.parent-hover{visibility: hidden;}
+*:hover > .parent-hover{visibility: visible;}

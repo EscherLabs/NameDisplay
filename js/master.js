@@ -90,6 +90,17 @@ $('body').on('click','li',function(e){
 
 
 })
+$('body').on('click','.remove',function(e){
+e.stopPropagation();
+//   _.find(displayQueue,e.currentTarget.dataset)
+
+
+_.remove(displayQueue,e.currentTarget.parentElement.dataset)
+    updateQueue();
+
+
+})
+
 
 setDisplay = function(data) {
      var rendered_text = Mustache.render("<h1>{{name}}</h1><h2>{{major}}</h2>", data);
@@ -105,7 +116,7 @@ updateQueue = function(item) {
         data.guid = generateUUID();
         displayQueue.push(item);
     }
-    queueTemplate = '<ul class="list-group">{{#.}}<li data-guid="{{guid}}" class="list-group-item"><div class="handle"></div>{{name}} - {{major}}</li>{{/.}}</ul>';
+    queueTemplate = '<ul class="list-group">{{#.}}<li data-guid="{{guid}}" class="list-group-item"><div class="handle"></div>{{name}} - {{major}}<div class="btn btn-danger parent-hover pull-right remove"><i class="fa fa-times"></i></div></li>{{/.}}</ul>';
     var queueHTML = Mustache.render(queueTemplate, displayQueue);
     $('#upcoming-queue').html(queueHTML);
     var sortable = new Sortable($('ul')[0],{onSort: function (/**Event*/evt) {
