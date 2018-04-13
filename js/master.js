@@ -68,7 +68,8 @@ scanner.addListener('scan', function (content) {
 });
 
 fields = [
-    {label: 'Name'}, 
+    {label: 'First Name'}, 
+    {label: 'Last Name'}, 
     {label: 'Major'}
 ]
 var structuredFields = _.map(fields, Berry.normalizeItem);
@@ -91,18 +92,19 @@ function checkKey(e) {
     case 37:
         e.preventDefault()
         if (assert_child_window()) {
+            debugger;
             var item = displayBuffer.shift();
             if(typeof item !== 'undefined'){
-                displayQueue.unshift(item)
+                displayQueue.unshift(item);
                 updateQueue();
                 var old = displayBuffer.shift();
-                    setDisplay(old || {})
+                setDisplay(old || {});
             }else{
-                 setDisplay({})
+                setDisplay({});
             }
-        }		
+        }
+        break;
     case 13://enter
-
         e.preventDefault();
         e.stopPropagation();
         
@@ -146,10 +148,9 @@ setDisplay = function(data) {
     if(typeof data.guid !== 'undefined'){
         data.timestamp = moment().format();
         displayBuffer.unshift(data);
-
     }
 
-    var rendered_text = Mustache.render("<h1>{{name}}</h1><h2>{{major}}</h2>", data);
+    var rendered_text = Mustache.render("<h1>{{first_name}} {{last_name}}</h1><h2>{{major}}</h2>", data);
     if (__CHILD_WINDOW_HANDLE !== null) {
         __CHILD_WINDOW_HANDLE.ProcessParentMessage(rendered_text);
     }
@@ -166,7 +167,7 @@ updateQueue = function(item) {
         displayQueue.push(item);
         Lockr.set('displayQueue',displayQueue);
     }
-    queueTemplate = '<ul class="list-group">{{#.}}<li data-guid="{{guid}}" class="list-group-item"><div class="handle"></div>{{name}} - {{major}}<div class="btn btn-sm btn-danger parent-hover pull-right remove"><i class="fa fa-times"></i></div><div class="btn btn-sm btn-info parent-hover pull-right edit" style="margin-right:10px"><i class="fa fa-pencil"></i></div></li>{{/.}}</ul>';
+    queueTemplate = '<ul class="list-group">{{#.}}<li data-guid="{{guid}}" class="list-group-item"><div class="handle"></div>{{first_name}} {{last_name}} - {{major}}<div class="btn btn-sm btn-danger parent-hover pull-right remove"><i class="fa fa-times"></i></div><div class="btn btn-sm btn-info parent-hover pull-right edit" style="margin-right:10px"><i class="fa fa-pencil"></i></div></li>{{/.}}</ul>';
     var queueHTML = Mustache.render(queueTemplate, displayQueue);
     $('#upcoming-queue').html(queueHTML);
     var sortable = new Sortable($('ul')[0],{handle:'.handle',onSort: function (/**Event*/evt) {
@@ -182,15 +183,16 @@ updateQueue = function(item) {
 }
 
 $('#myForm').berry({
-    default:{columns:6},
+    default:{columns:4},
     name:'form',
+    inline:true,
     fields: fields,
     actions: false,
 }).on('save',function() {
-    if(this.toJSON().name !== '' || this.toJSON().major !== ''){
+    if(this.toJSON().first_mame !== '' || this.toJSON().last_name !== '' || this.toJSON().major !== ''){
         updateQueue(this.toJSON());
-        this.populate({name:'',major:''})
-        this.fields.name.focus();
+        this.populate({first_name:'',last_name:'',major:''})
+        this.fields.first_name.focus();
     }
 });
 
