@@ -54,16 +54,25 @@ scanner.addListener('scan', function (content) {
     beep();
     try {
         // assert_child_window();
-        updateQueue(JSON.parse(content));
+        var contentArray = content.split(',');
+        var contentObj = {};
+        _.each(structuredFields, function(field, index){
+            contentObj[field.name] = contentArray[index];
+        })
+        updateQueue(contentObj);
+
+        // updateQueue(JSON.parse(content));
     } catch (e) {
         toastr.error('Error with QR Code')
     }
 });
 
 fields = [
-        {label: 'Name'}, 
-        {label: 'Major'}
-    ]
+    {label: 'Name'}, 
+    {label: 'Major'}
+]
+var structuredFields = _.map(fields, Berry.normalizeItem);
+
 function ProcessChildMessage(e) { checkKey(e) }
 
 // Detect Right Arrow Key Event
@@ -157,7 +166,7 @@ updateQueue = function(item) {
         displayQueue.push(item);
         Lockr.set('displayQueue',displayQueue);
     }
-    queueTemplate = '<ul class="list-group">{{#.}}<li data-guid="{{guid}}" class="list-group-item"><div class="handle"></div>{{name}} - {{major}}<div class="btn btn-danger parent-hover pull-right remove"><i class="fa fa-times"></i></div><div class="btn btn-info parent-hover pull-right edit"><i class="fa fa-pencil"></i></div></li>{{/.}}</ul>';
+    queueTemplate = '<ul class="list-group">{{#.}}<li data-guid="{{guid}}" class="list-group-item"><div class="handle"></div>{{name}} - {{major}}<div class="btn btn-sm btn-danger parent-hover pull-right remove"><i class="fa fa-times"></i></div><div class="btn btn-sm btn-info parent-hover pull-right edit" style="margin-right:10px"><i class="fa fa-pencil"></i></div></li>{{/.}}</ul>';
     var queueHTML = Mustache.render(queueTemplate, displayQueue);
     $('#upcoming-queue').html(queueHTML);
     var sortable = new Sortable($('ul')[0],{handle:'.handle',onSort: function (/**Event*/evt) {
@@ -197,7 +206,7 @@ function downloadHistory() {
 }
 
 csvify = function(data, title) {
-    var columns = _.map(fields,Berry.normalizeItem);
+    var columns = _.map(fields, Berry.normalizeItem);
     var csv = '"'+_.map(columns,'label').join('","')+'","Timestamp"\n';
     var labels = _.map(columns,'name')
     labels.push('timestamp');
@@ -215,7 +224,7 @@ csvify = function(data, title) {
     link.setAttribute("download", (title||"history")+".csv");
     document.body.appendChild(link); // Required for FF
     link.click();
-    document.body.removeChild(link); 
+    document.body.removeChild(link);
 }
 
 updateQueue();

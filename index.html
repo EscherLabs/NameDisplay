@@ -3,7 +3,8 @@
   <head>
     <title>Main Controller | Commencement Display</title>
 
-    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <!--<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">-->
+    <link href="css/font-awesome.min.css" rel="stylesheet">
 
     <link rel="stylesheet" href="css/bootstrap.min.css">
     <link rel="stylesheet" href="css/toastr.min.css">
@@ -11,7 +12,7 @@
     <link rel="stylesheet" href="css/master.css">
   </head>
   <body>
-      <div id="left" class="" style="font-size:18px;padding:30px;color:#ddd">
+      <div id="left" class="" style="font-size:18px;padding:15px;color:#ddd">
 
         <div id="myForm"></div>
 
@@ -24,14 +25,14 @@
       <div id="bottom-right" class="quadrant preview-screen">
 
 <div class="btn-group pull-right">
-  <button type="button" class="btn btn-primary" id="open-display-btn">Open Display Window</button>
+  <button type="button" class="btn btn-primary" id="open-display-btn"><i class="fa fa-external-link"></i> Open Display Window</button>
   <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
     <span class="caret"></span>
     <span class="sr-only">Toggle Dropdown</span>
   </button>
   <ul class="dropdown-menu">
-    <li><a href="#" onclick="resetQueue();">Reset Queue History</a></li>
-    <li><a href="#" onclick="downloadHistory();">Download History</a></li>
+    <li><a href="#" onclick="resetQueue();"><i class="fa fa-ban"></i> Reset Queue History</a></li>
+    <li><a href="#" onclick="downloadHistory();"><i class="fa fa-download"></i> Download History</a></li>
   </ul>
 </div>
 
