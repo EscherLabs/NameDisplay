@@ -35,11 +35,13 @@ h1 {
     width: 50%;
     height: 50%;
     border-width: 5px 0px 0px 5px;
+    padding: 10px;
+    color:#ddd;
 }
 
 body {
     background-color:#333;
-    color:#777;
+    
 }
 
 video {

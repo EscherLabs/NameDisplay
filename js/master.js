@@ -5,9 +5,8 @@ function beep() {
 
 let scanner = new Instascan.Scanner({ video: document.getElementById('video-preview') });
 
-displayQueue = [];
-// displayQueue = [{"name":"first","major":"","guid":"07f0805c-44bf-4be0-a6c9-019909257fbc"},{"name":"second","major":"","guid":"35145150-095b-4a70-b3a8-0b79bc18b1e7"},{"name":"third","major":"","guid":"4d14d6e9-c250-48ad-8471-a2919d929e53"}];
-displayBuffer = [];
+displayQueue = Lockr.get('displayQueue') || [];
+displayBuffer = Lockr.get('displayBuffer') || [];
 
 assert_child_window = function() {
     // if (__CHILD_WINDOW_HANDLE === null) {
@@ -50,7 +49,6 @@ function generateUUID(){
     return uuid;
 };
 
-
 scanner.addListener('scan', function (content) {
     toastr.info('QR Code Scanned')
     beep();
@@ -62,7 +60,6 @@ scanner.addListener('scan', function (content) {
     }
 });
 
-
 fields = [
         {label: 'Name'}, 
         {label: 'Major'}
@@ -70,7 +67,6 @@ fields = [
 function ProcessChildMessage(e) { checkKey(e) }
 
 // Detect Right Arrow Key Event
-
 document.onkeydown = checkKey;
 
 function checkKey(e) {
@@ -106,18 +102,18 @@ function checkKey(e) {
         break;
     }			
 }
-$('body').on('click','li',function(e){
+$('body').on('click','li',function(e) {
     setDisplay(_.remove(displayQueue,e.currentTarget.dataset)[0] || {})
     updateQueue();
 })
 
-$('body').on('click','.remove',function(e){
+$('body').on('click','.remove',function(e) {
     e.stopPropagation();
     _.remove(displayQueue,e.currentTarget.parentElement.dataset)
     updateQueue();
 })
 
-$('body').on('click','.edit',function(e){
+$('body').on('click','.edit',function(e) {
     e.stopPropagation();
     var  editFields = [];
     $.extend(true, editFields,fields);
@@ -139,13 +135,19 @@ $('body').on('click','.edit',function(e){
 
 setDisplay = function(data) {
     if(typeof data.guid !== 'undefined'){
+        data.timestamp = moment().format();
         displayBuffer.unshift(data);
+
     }
+
     var rendered_text = Mustache.render("<h1>{{name}}</h1><h2>{{major}}</h2>", data);
     if (__CHILD_WINDOW_HANDLE !== null) {
         __CHILD_WINDOW_HANDLE.ProcessParentMessage(rendered_text);
     }
     $('#current-person-preview').html(rendered_text);
+
+    Lockr.set('displayQueue', displayQueue);
+    Lockr.set('displayBuffer', displayBuffer);
 }
 
 updateQueue = function(item) {
@@ -153,6 +155,7 @@ updateQueue = function(item) {
         var data = item;
         data.guid = generateUUID();
         displayQueue.push(item);
+        Lockr.set('displayQueue',displayQueue);
     }
     queueTemplate = '<ul class="list-group">{{#.}}<li data-guid="{{guid}}" class="list-group-item"><div class="handle"></div>{{name}} - {{major}}<div class="btn btn-danger parent-hover pull-right remove"><i class="fa fa-times"></i></div><div class="btn btn-info parent-hover pull-right edit"><i class="fa fa-pencil"></i></div></li>{{/.}}</ul>';
     var queueHTML = Mustache.render(queueTemplate, displayQueue);
@@ -166,7 +169,6 @@ updateQueue = function(item) {
         displayQueue = _.sortBy(displayQueue, function(item){
             return list.indexOf(item.guid)
         });
-
     }})
 }
 
@@ -182,3 +184,38 @@ $('#myForm').berry({
         this.fields.name.focus();
     }
 });
+
+function resetQueue() {
+    displayQueue = [];
+    displayBuffer = [];
+    updateQueue();
+    setDisplay({})
+}
+
+function downloadHistory() {
+    csvify(displayBuffer);
+}
+
+csvify = function(data, title) {
+    var columns = _.map(fields,Berry.normalizeItem);
+    var csv = '"'+_.map(columns,'label').join('","')+'","Timestamp"\n';
+    var labels = _.map(columns,'name')
+    labels.push('timestamp');
+    var empty = _.zipObject(this.labels, _.map(labels, function() { return '';}))
+
+    csv += _.map(data,function(d){
+        return JSON.stringify(_.values(_.extend(empty,_.pick(d,labels))))
+    },this)
+    .join('\n') 
+    .replace(/(^\[)|(\]$)/mg, '')
+    .split('\"').join("")
+ 
+    var link = document.createElement("a");
+    link.setAttribute("href", 'data:text/csv;charset=utf-8,' + encodeURIComponent(csv));
+    link.setAttribute("download", (title||"history")+".csv");
+    document.body.appendChild(link); // Required for FF
+    link.click();
+    document.body.removeChild(link); 
+}
+
+updateQueue();
