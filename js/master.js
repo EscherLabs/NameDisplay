@@ -73,6 +73,8 @@ fields = [
     {label: 'Major'}
 ]
 var structuredFields = _.map(fields, Berry.normalizeItem);
+var labels = _.map(structuredFields,'name')
+var empty = _.zipObject(labels, _.map(labels, function() { return '';}))
 
 function ProcessChildMessage(e) { checkKey(e) }
 
@@ -189,10 +191,11 @@ $('#myForm').berry({
     fields: fields,
     actions: false,
 }).on('save',function() {
-    if(this.toJSON().first_mame !== '' || this.toJSON().last_name !== '' || this.toJSON().major !== ''){
+    if(!_.every(this.toJSON(), _.isEmpty)){
         updateQueue(this.toJSON());
-        this.populate({first_name:'',last_name:'',major:''})
-        this.fields.first_name.focus();
+        this.populate(empty)
+        this.$el.find('.form-control:first').focus();
+
     }
 });
 
@@ -208,11 +211,8 @@ function downloadHistory() {
 }
 
 csvify = function(data, title) {
-    var columns = _.map(fields, Berry.normalizeItem);
-    var csv = '"'+_.map(columns,'label').join('","')+'","Timestamp"\n';
-    var labels = _.map(columns,'name')
+    var csv = '"'+_.map(structuredFields,'label').join('","')+'","Timestamp"\n';
     labels.push('timestamp');
-    var empty = _.zipObject(this.labels, _.map(labels, function() { return '';}))
 
     csv += _.map(data,function(d){
         return JSON.stringify(_.values(_.extend(empty,_.pick(d,labels))))
