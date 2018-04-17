@@ -1,6 +1,7 @@
 fields = [
     {label: 'First Name'}, 
     {label: 'Last Name'}, 
+    {label: 'Unique ID', type:"hidden",offset:-4},
     {label: 'Major'}
 ];
 
