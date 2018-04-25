@@ -60,7 +60,8 @@ function generateUUID(){
     return uuid;
 };
 
-scanner.addListener('scan', function (content) {
+
+process_qr_code = function (content) {
     toastr.info('QR Code Scanned')
     beep();
     try {
@@ -76,7 +77,9 @@ scanner.addListener('scan', function (content) {
     } catch (e) {
         toastr.error('Error with QR Code')
     }
-});
+};
+scanner.addListener('scan', process_qr_code);
+
 var structuredFields = _.map(fields, Berry.normalizeItem);
 var labels = _.map(structuredFields,'name')
 var empty = _.zipObject(labels, _.map(labels, function() { return '';}))
