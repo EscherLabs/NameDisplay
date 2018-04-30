@@ -11,7 +11,6 @@ document.onkeydown = checkKey;
 
 function checkKey(e) {
     e = e || window.event;
-		debugger;
     if (typeof schools[e.keyCode] !== 'undefined') {
 		e.preventDefault()
 		var fileref = document.createElement("link");

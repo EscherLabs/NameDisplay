@@ -1,12 +1,13 @@
 fields = [
     {label: 'First Name'}, 
     {label: 'Last Name'}, 
-    {label: 'Unique ID', type:"hidden",offset:-4},
-    {label: 'Major'}
+    {label: 'Degree'},
+    {label: 'Department'},
+    {label: 'Unique ID', type:'hidden'},
 ];
 
-template = "<h1>{{first_name}} {{last_name}}</h1><h2>{{major}}</h2>";
-queueTemplate = '<ul class="list-group">{{#.}}<li data-guid="{{guid}}" class="list-group-item"><div class="handle"></div>{{first_name}} {{last_name}} - {{major}}<div class="btn btn-sm btn-danger parent-hover pull-right remove"><i class="fa fa-times"></i></div><div class="btn btn-sm btn-info parent-hover pull-right edit" style="margin-right:10px"><i class="fa fa-pencil"></i></div></li>{{/.}}</ul>';
+template = "<h1>{{first_name}} {{last_name}}</h1><h2>{{degree}} {{department}}</h2>";
+queueTemplate = '<ul class="list-group">{{#.}}<li data-guid="{{guid}}" class="list-group-item"><div class="handle"></div>{{first_name}} {{last_name}} - {{degree}} {{department}}<div class="btn btn-sm btn-danger parent-hover pull-right remove"><i class="fa fa-times"></i></div><div class="btn btn-sm btn-info parent-hover pull-right edit" style="margin-right:10px"><i class="fa fa-pencil"></i></div></li>{{/.}}</ul>';
 
 
 function beep() {
@@ -193,7 +194,7 @@ updateQueue = function(item) {
 }
 
 $('#myForm').berry({
-    default:{columns:4},
+    default:{columns:3},
     name:'form',
     inline:true,
     fields: fields,
