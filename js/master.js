@@ -174,6 +174,7 @@ setDisplay = function(data) {
 updateQueue = function(item) {
     if(typeof item !== 'undefined'){
         var data = item;
+        Berries.form.populate($.extend({},item, {first_name: '',last_name: ''}));        
         data.guid = generateUUID();
         displayQueue.push(item);
         Lockr.set('displayQueue',displayQueue);
