@@ -7,7 +7,7 @@ fields = [
 ];
 
 template = "<h1>{{first_name}} {{last_name}}</h1><h2>{{degree}} {{department}}</h2>";
-queueTemplate = '<ul class="list-group">{{#.}}<li data-guid="{{guid}}" class="list-group-item"><div class="handle"></div>{{first_name}} {{last_name}} - {{degree}} {{department}}<div class="btn btn-sm btn-danger parent-hover pull-right remove"><i class="fa fa-times"></i></div><div class="btn btn-sm btn-info parent-hover pull-right edit" style="margin-right:10px"><i class="fa fa-pencil"></i></div></li>{{/.}}</ul>';
+queueTemplate = '<ul class="list-group">{{#.}}<li data-guid="{{guid}}" class="list-group-item"><div class="handle"></div>{{first_name}} {{last_name}} - {{degree}} {{department}}<div class="btn btn-sm btn-danger parent-hover pull-right remove"><i class="fa fa-times"></i></div><div class="btn btn-sm btn-info parent-hover pull-right edit" style="margin-right:10px"><i class="fa fa-pencil"></i></div><div class="btn btn-sm btn-warning parent-hover pull-right go" style="margin-right:10px"><i class="fa fa-arrow-right"></i></div></li>{{/.}}</ul>';
 
 
 function beep() {
@@ -48,7 +48,8 @@ toastr.options = {
 
 var __CHILD_WINDOW_HANDLE = null;
 $("#open-display-btn").on('click', function() {
-	__CHILD_WINDOW_HANDLE = window.open('display.html', '_blank', 'width=700,height=500,left=200,top=100');
+    __CHILD_WINDOW_HANDLE = window.open('display.html', '_blank', 'width=700,height=500,left=200,top=100');
+    $("#open-display-btn").trigger('blur');
 });
 
 function generateUUID(){
@@ -124,8 +125,8 @@ function checkKey(e) {
         break;
     }			
 }
-$('body').on('click','li',function(e) {
-    setDisplay(_.remove(displayQueue,e.currentTarget.dataset)[0] || {})
+$('body').on('click','.go',function(e) {
+    setDisplay(_.remove(displayQueue,e.currentTarget.parentElement.dataset)[0] || {})
     updateQueue();
 })
 
@@ -133,6 +134,8 @@ $('body').on('click','.remove',function(e) {
     e.stopPropagation();
     _.remove(displayQueue,e.currentTarget.parentElement.dataset)
     updateQueue();
+    Lockr.set('displayQueue',displayQueue);
+    
 })
 
 $('body').on('click','.edit',function(e) {
