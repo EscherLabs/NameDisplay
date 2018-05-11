@@ -1,7 +1,7 @@
 
 read_char_buffer = false;
 char_buffer = [];
-document.onkeypress = function(evt) {
+read_qr_keypress = function(evt) {
     evt = evt || window.event;
     var charCode = evt.which || evt.keyCode;
     var charStr = String.fromCharCode(charCode);

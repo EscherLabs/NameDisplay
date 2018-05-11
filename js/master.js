@@ -28,8 +28,6 @@ assert_child_window = function() {
     return true;
 }
 
-
-
 Instascan.Camera.getCameras().then(function (cameras) {
     if (cameras.length > 0) {
         scanner.start(cameras[0]);
@@ -48,8 +46,8 @@ toastr.options = {
 
 var __CHILD_WINDOW_HANDLE = null;
 $("#open-display-btn").on('click', function() {
-    __CHILD_WINDOW_HANDLE = window.open('display.html', '_blank', 'width=700,height=500,left=200,top=100');
     $("#open-display-btn").trigger('blur');
+	__CHILD_WINDOW_HANDLE = window.open('display.html', '_blank', 'width=700,height=500,left=200,top=100');
 });
 
 function generateUUID(){
@@ -86,10 +84,17 @@ var structuredFields = _.map(fields, Berry.normalizeItem);
 var labels = _.map(structuredFields,'name')
 var empty = _.zipObject(labels, _.map(labels, function() { return '';}))
 
-function ProcessChildMessage(e) { checkKey(e) }
+function ProcessChildMessage(e) { 
+    if (e.type == 'keydown') {
+        checkKey(e) 
+    } else if (e.type == 'keypress') {
+        read_qr_keypress(e)
+    }
+}
 
 // Detect Right Arrow Key Event
 document.onkeydown = checkKey;
+document.onkeypress = read_qr_keypress;
 
 function checkKey(e) {
     e = e || window.event;
@@ -104,7 +109,6 @@ function checkKey(e) {
     case 37:
         e.preventDefault()
         if (assert_child_window()) {
-            debugger;
             var item = displayBuffer.shift();
             if(typeof item !== 'undefined'){
                 displayQueue.unshift(item);
@@ -134,8 +138,7 @@ $('body').on('click','.remove',function(e) {
     e.stopPropagation();
     _.remove(displayQueue,e.currentTarget.parentElement.dataset)
     updateQueue();
-    Lockr.set('displayQueue',displayQueue);
-    
+    Lockr.set('displayQueue',displayQueue); 
 })
 
 $('body').on('click','.edit',function(e) {
@@ -177,7 +180,7 @@ setDisplay = function(data) {
 updateQueue = function(item) {
     if(typeof item !== 'undefined'){
         var data = item;
-        Berries.form.populate($.extend({},item, {first_name: '',last_name: ''}));        
+        Berries.form.populate($.extend({},item, {first_name: '',last_name: ''}));
         data.guid = generateUUID();
         displayQueue.push(item);
         Lockr.set('displayQueue',displayQueue);
