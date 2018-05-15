@@ -15,18 +15,10 @@ function beep() {
     snd.play();
 }
 
-let scanner = new Instascan.Scanner({ video: document.getElementById('video-preview') });
+let scanner = new Instascan.Scanner({ video: document.getElementById('video-preview'), scanPeriod: 10, refractoryPeriod: 1000});
 
 displayQueue = Lockr.get('displayQueue') || [];
 displayBuffer = Lockr.get('displayBuffer') || [];
-
-assert_child_window = function() {
-    // if (__CHILD_WINDOW_HANDLE === null) {
-    //     toastr.error('You must open the Display Window!');
-    //     return false;
-    // }
-    return true;
-}
 
 Instascan.Camera.getCameras().then(function (cameras) {
     if (cameras.length > 0) {
@@ -65,7 +57,6 @@ process_qr_code = function (content) {
     toastr.info('QR Code Scanned')
     beep();
     try {
-        // assert_child_window();
         var contentArray = content.split(',');
         var contentObj = {};
         _.each(structuredFields, function(field, index){
@@ -101,23 +92,19 @@ function checkKey(e) {
     switch(e.keyCode){
     case 39:
         e.preventDefault()
-        if (assert_child_window()) {
-            setDisplay(displayQueue.shift() || {})
-            updateQueue();
-        }
+        setDisplay(displayQueue.shift() || {})
+        updateQueue();
         break;
     case 37:
         e.preventDefault()
-        if (assert_child_window()) {
-            var item = displayBuffer.shift();
-            if(typeof item !== 'undefined'){
-                displayQueue.unshift(item);
-                updateQueue();
-                var old = displayBuffer.shift();
-                setDisplay(old || {});
-            }else{
-                setDisplay({});
-            }
+        var item = displayBuffer.shift();
+        if(typeof item !== 'undefined'){
+            displayQueue.unshift(item);
+            updateQueue();
+            var old = displayBuffer.shift();
+            setDisplay(old || {});
+        }else{
+            setDisplay({});
         }
         break;
     case 13://enter
