@@ -170,7 +170,6 @@ updateQueue = function(item) {
         Berries.form.populate($.extend({},item, {first_name: '',last_name: ''}));
         data.guid = generateUUID();
         displayQueue.push(item);
-        Lockr.set('displayQueue',displayQueue);
     }
 
     var queueHTML = Mustache.render(queueTemplate, displayQueue);
@@ -185,6 +184,11 @@ updateQueue = function(item) {
             return list.indexOf(item.guid)
         });
     }})
+
+    // Update LocalStorage Last
+    if(typeof item !== 'undefined'){
+        Lockr.set('displayQueue',displayQueue);
+    }
 }
 
 $('#myForm').berry({
