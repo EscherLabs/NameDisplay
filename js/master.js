@@ -176,12 +176,12 @@ updateQueue = function(item) {
     $('#upcoming-queue').html(queueHTML);
     var sortable = new Sortable($('ul')[0],{handle:'.handle',onSort: function (/**Event*/evt) {
 		// same properties as onEnd
-        var list = _.map($('ul li'),function(item){
-            return item.dataset.guid
+        var list = _.map($('ul li'),function(internal_item){
+            return internal_item.dataset.guid
         })
 
-        displayQueue = _.sortBy(displayQueue, function(item){
-            return list.indexOf(item.guid)
+        displayQueue = _.sortBy(displayQueue, function(internal_item){
+            return list.indexOf(internal_item.guid)
         });
     }})
 
