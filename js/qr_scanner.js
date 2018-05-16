@@ -1,4 +1,24 @@
+toastr.options = {
+    "positionClass": "toast-top-left",
+    "timeOut": "2000",
+}
 
+process_qr_code = function (content) {
+    toastr.info('QR Code Scanned')
+    beep();
+    try {
+        var contentArray = content.split(',');
+        var contentObj = {};
+        _.each(structuredFields, function(field, index){
+            contentObj[field.name] = contentArray[index];
+        })
+        updateQueue(contentObj);
+    } catch (e) {
+        toastr.error('Error with QR Code')
+    }
+};
+
+/* Physical QR Code Scanner */
 read_char_buffer = false;
 char_buffer = [];
 read_qr_keypress = function(evt) {
@@ -26,3 +46,23 @@ read_qr_keypress = function(evt) {
     }
 };
 
+document.onkeypress = read_qr_keypress;
+/* End Physical QR Code Scanner */
+
+/* Optical / Camera QR Code Scanner */
+
+let scanner = new Instascan.Scanner({ video: document.getElementById('video-preview'), scanPeriod: 10, refractoryPeriod: 1000});
+
+Instascan.Camera.getCameras().then(function (cameras) {
+    if (cameras.length > 0) {
+        scanner.start(cameras[0]);
+    } else {
+        toastr.error('No cameras found.');
+    }
+}).catch(function (e) {
+    console.error(e);
+});
+
+scanner.addListener('scan', process_qr_code);
+
+/* End Optical / Camera QR Code Scanner */
