@@ -154,7 +154,7 @@ setDisplay = function(data) {
 updateQueue = function(item) {
     if(typeof item !== 'undefined'){
         var data = item;
-        Berries.form.populate($.extend({},item, {first_name: '',last_name: ''}));
+        Berries.form.populate($.extend({},item, {first_name: '',last_name: '',unique_id: ''}));
         data.guid = generateUUID();
         displayQueue.push(item);
     }
@@ -182,10 +182,10 @@ $('#myForm').berry({
     fields: fields,
     actions: false,
 }).on('save',function() {
-    if(!_.every(this.toJSON(), _.isEmpty)){
+    // if(!_.every(this.toJSON(), _.isEmpty)){
         updateQueue(this.toJSON());
         this.$el.find('.form-control:first').focus();
-    }
+    // }
 });
 
 function resetQueue() {
