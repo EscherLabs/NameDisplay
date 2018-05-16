@@ -12,7 +12,7 @@ var labels = _.map(structuredFields,'name')
 var empty = _.zipObject(labels, _.map(labels, function() { return '';}))
 
 template = "<h1>{{first_name}} {{last_name}}</h1><h2>{{degree}} {{department}}</h2>";
-queueTemplate = '<ul class="list-group">{{#.}}<li data-guid="{{guid}}" class="list-group-item"><div class="handle"></div>{{first_name}} {{last_name}} - {{degree}} {{department}}<div class="btn btn-sm btn-danger parent-hover pull-right remove"><i class="fa fa-times"></i></div><div class="btn btn-sm btn-info parent-hover pull-right edit" style="margin-right:10px"><i class="fa fa-pencil"></i></div><div class="btn btn-sm btn-warning parent-hover pull-right go" style="margin-right:10px"><i class="fa fa-arrow-right"></i></div></li>{{/.}}</ul>';
+queueTemplate = '<ul class="list-group">{{#.}}<li data-guid="{{guid}}" class="list-group-item"><div class="handle"></div><div class="btn btn-sm btn-danger parent-hover pull-right remove"><i class="fa fa-times"></i></div><div class="btn btn-sm btn-info parent-hover pull-right edit" style="margin-right:10px"><i class="fa fa-pencil"></i></div><div class="btn btn-sm btn-warning parent-hover pull-right go" style="margin-right:10px"><i class="fa fa-arrow-right"></i></div><span style="white-space:nowrap;overflow:hidden;">{{first_name}} {{last_name}} - {{degree}} {{department}}</span></li>{{/.}}</ul>';
 
 /* End Configuration */
 
@@ -189,10 +189,12 @@ $('#myForm').berry({
 });
 
 function resetQueue() {
-    displayQueue = [];
-    displayBuffer = [];
-    updateQueue();
-    setDisplay({})
+    if (confirm("Are you super duper sure you want to do this?  (It cannot be undone)")) {
+        displayQueue = [];
+        displayBuffer = [];
+        updateQueue();
+        setDisplay({})
+    }
 }
 
 function downloadHistory() {
