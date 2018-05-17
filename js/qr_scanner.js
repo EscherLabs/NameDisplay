@@ -1,10 +1,21 @@
-toastr.options = {
-    "positionClass": "toast-top-left",
-    "timeOut": "2000",
+alert = function(content,status) {
+    color = 'green';
+    if (typeof status !== 'undefined') {
+        if (status === 'success') {
+            color = 'green';
+        } else if (status === 'error') {
+            color = 'red';
+        }
+    }
+    $('.success-notification').css("background-color",color);
+    $('.success-notification').html('<h1>'+content+'</h1>');
+    $('.success-notification').show();
+    setTimeout(function(){ 
+        $('.success-notification').hide();
+     }, 1000);
 }
 
 process_qr_code = function (content) {
-    toastr.info('QR Code Scanned')
     beep();
     try {
         var contentArray = content.split(',');
@@ -12,9 +23,10 @@ process_qr_code = function (content) {
         _.each(structuredFields, function(field, index){
             contentObj[field.name] = contentArray[index];
         })
+        alert(contentObj.first_name+" "+contentObj.last_name+"<h2>"+contentObj.degree+" "+contentObj.department+"</h2>",'success')
         updateQueue(contentObj);
     } catch (e) {
-        toastr.error('Error with QR Code')
+        alert('Error with Scan<br>Please Try Again','error')
     }
 };
 
@@ -29,7 +41,13 @@ read_qr_keypress = function(evt) {
         evt.preventDefault();
         evt.stopPropagation();
         read_char_buffer = true;
-        setTimeout(function(){ read_char_buffer = false; char_buffer = []; },200);
+        setTimeout(function(){ 
+            if (read_char_buffer === true) {
+                alert('Error with Scan<br>Please Try Again','error')
+            }
+            read_char_buffer = false; 
+            char_buffer = []; 
+        },300);
         return;
     } 
     if (read_char_buffer) {
@@ -57,7 +75,7 @@ Instascan.Camera.getCameras().then(function (cameras) {
     if (cameras.length > 0) {
         scanner.start(cameras[0]);
     } else {
-        toastr.error('No cameras found.');
+        alert('No cameras found.','error');
     }
 }).catch(function (e) {
     console.error(e);

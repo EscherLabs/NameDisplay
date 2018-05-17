@@ -97,3 +97,22 @@ h3 {
 
 .parent-hover{visibility: hidden;}
 *:hover > .parent-hover{visibility: visible;}
+
+.success-notification {
+    display:none;
+    height:100%;
+    position:absolute;
+    right:0px;
+    width:100%;
+    vertical-align:middle;
+    text-align:center;
+}
+
+.success-notification h1 {
+    color:white;
+    font-size: 5vw;
+}
+.success-notification h2 {
+    color:white;
+    font-size: 4vw;
+}
