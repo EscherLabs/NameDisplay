@@ -1,3 +1,5 @@
+
+var myAlertTimeout;
 alert = function(content,status) {
     color = 'green';
     if (typeof status !== 'undefined') {
@@ -8,9 +10,15 @@ alert = function(content,status) {
         }
     }
     $('.success-notification').css("background-color",color).html('<h1>'+content+'</h1>').show();
-    setTimeout(function(){ 
+    
+    clearTimeout(myAlertTimeout);
+    
+    myAlertTimeout = setTimeout(function(){ 
         $('.success-notification').hide();
-     }, 2000);
+    }, 2000);
+     
+     
+
 }
 
 process_qr_code = function (content) {
