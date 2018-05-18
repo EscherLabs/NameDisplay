@@ -81,14 +81,19 @@ h3 {
     overflow:scroll;
     /*max-height: 35vh;*/
     position:fixed;
-    top:100px;
+    /*FORM: change to 100 to enable form*/
+    top:10px;
     bottom:0;
     left:0;
     /*right:10px;*/
     width:50%;
     padding:0 10px;
 }
-
+    
+/*FORM: remove to enable form*/
+#myForm{
+    display:none
+}
 .list-group-item .handle{color:#aaa;width: 45px;background:#fcfdfc;text-align:center;border-right: solid 1px #eee;cursor:move;padding-top: 14px;padding-bottom: 14px;margin: -10px 20px -10px -15px;display: inline-block;font:normal normal normal 14px/1 FontAwesome;font-size:inherit;text-rendering:auto;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}
 .list-group-item:hover .handle{background:#f8f8f8;color:#626262;}
 .list-group-item .handle:before{

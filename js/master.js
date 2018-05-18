@@ -105,11 +105,13 @@ function checkKey(e) {
             setDisplay({});
         }
         break;
-    case 13: /* Enter Key */
-        e.preventDefault();
-        e.stopPropagation();        
-        Berries.form.trigger('save');
-        break;
+        /*FORM: uncomment to enable form*/
+
+    // case 13: /* Enter Key */
+    //     e.preventDefault();
+    //     e.stopPropagation();        
+    //     Berries.form.trigger('save');
+    //     break;
     case 27: /* Escape Key */
         e.preventDefault();
         e.stopPropagation();        
@@ -184,9 +186,9 @@ updateQueue = function(item) {
         });
     }})
     // Update LocalStorage Last
-    if(typeof item !== 'undefined'){
+    // if(typeof item !== 'undefined'){
         Lockr.set('displayQueue', displayQueue);
-    }
+    // }
     if(typeof item !== 'undefined' && (item.force == 'true')){
         $('[data-guid="'+item.guid+'"]').find('.go').click()
     }
