@@ -5,6 +5,7 @@ fields = [
     {label: 'Degree'},
     {label: 'Department'},
     {label: 'Unique ID', type:'hidden'},
+    {label: 'Force', type:'checkbox',show:false,truestate:'true',falsestate:'false'}
 ];
 
 var structuredFields = _.map(fields, Berry.normalizeItem);
@@ -166,7 +167,8 @@ setDisplay = function(data) {
 updateQueue = function(item) {
     if(typeof item !== 'undefined'){
         var data = item;
-        Berries.form.populate($.extend({},item, {first_name: '',last_name: '',unique_id: ''}));
+        Berries.form.populate($.extend({},item, {first_name: '',last_name: '',unique_id: '',force: 'false'}));
+
         data.guid = generateUUID();
         displayQueue.push(item);
     }
@@ -184,6 +186,9 @@ updateQueue = function(item) {
     // Update LocalStorage Last
     if(typeof item !== 'undefined'){
         Lockr.set('displayQueue', displayQueue);
+    }
+    if(typeof item !== 'undefined' && (item.force == 'true')){
+        $('[data-guid="'+item.guid+'"]').find('.go').click()
     }
 }
 
