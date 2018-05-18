@@ -76,7 +76,9 @@ function ProcessChildMessage(e) {
         read_qr_keypress(e)
     }
 }
-
+window.onbeforeunload = function() {
+    return "";
+}
 /* Listen to Arrow Key, Enter Key Events */
 function checkKey(e) {
     e = e || window.event;
