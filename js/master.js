@@ -80,6 +80,13 @@ function ProcessChildMessage(e) {
 function checkKey(e) {
     e = e || window.event;
     switch(e.keyCode){
+    case 38: /* Up Arrow */
+    case 40: /* Down Arrow */
+    case 93: /* Menu Button (On Remote) */
+        e.preventDefault();
+        e.stopPropagation();        
+        setDisplay({});
+        break;
     case 39: /* Right Arrow */
         e.preventDefault()
         setDisplay(displayQueue.shift() || {})
@@ -101,6 +108,11 @@ function checkKey(e) {
         e.preventDefault();
         e.stopPropagation();        
         Berries.form.trigger('save');
+        break;
+    case 27: /* Escape Key */
+        e.preventDefault();
+        e.stopPropagation();        
+        setDisplay({'first_name':'Binghamton University','degree':'Class of 2018'});
         break;
     }			
 }

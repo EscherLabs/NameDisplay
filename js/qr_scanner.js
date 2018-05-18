@@ -7,9 +7,7 @@ alert = function(content,status) {
             color = 'red';
         }
     }
-    $('.success-notification').css("background-color",color);
-    $('.success-notification').html('<h1>'+content+'</h1>');
-    $('.success-notification').show();
+    $('.success-notification').css("background-color",color).html('<h1>'+content+'</h1>').show();
     setTimeout(function(){ 
         $('.success-notification').hide();
      }, 1000);
@@ -69,7 +67,7 @@ document.onkeypress = read_qr_keypress;
 
 /* Optical / Camera QR Code Scanner */
 
-let scanner = new Instascan.Scanner({ video: document.getElementById('video-preview'), scanPeriod: 10, refractoryPeriod: 1000});
+let scanner = new Instascan.Scanner({ video: document.getElementById('video-preview'), scanPeriod: 10, refractoryPeriod: 2000});
 
 Instascan.Camera.getCameras().then(function (cameras) {
     if (cameras.length > 0) {

@@ -1,6 +1,6 @@
 html {
     user-select: none;
-    cursor: none;
+    /* cursor: none; */
 }
 
 body {
