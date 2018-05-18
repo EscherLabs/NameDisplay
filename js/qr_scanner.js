@@ -19,6 +19,9 @@ process_qr_code = function (content) {
         var contentArray = content.split(',');
         var contentObj = {};
         _.each(structuredFields, function(field, index){
+            if (_.includes(['NFN', 'NLN', 'NDN', 'null'], contentArray[index])) {
+                contentArray[index] = '';
+            }
             contentObj[field.name] = contentArray[index];
         })
         alert(contentObj.first_name+" "+contentObj.last_name+"<h2>"+contentObj.degree+" "+contentObj.department+"</h2>",'success')
