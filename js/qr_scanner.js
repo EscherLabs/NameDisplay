@@ -59,7 +59,7 @@ read_qr_keypress = function(evt) {
             }
             read_char_buffer = false; 
             char_buffer = []; 
-        },300);
+        },500);
         return;
     } 
     if (read_char_buffer) {
