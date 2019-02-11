@@ -1,5 +1,11 @@
 function ProcessParentMessage(message) {
-	document.getElementById("person-info").innerHTML = message;
+	if(message == 'fullscreen'){
+		if (screenfull.enabled) {
+			screenfull.request();
+		}
+	}else{
+		document.getElementById("person-info").innerHTML = message;		
+	}
 }
 
 document.onkeydown = window.opener.ProcessChildMessage;

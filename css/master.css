@@ -43,7 +43,9 @@ body {
     background-color:#333;
     
 }
-
+html:fullscreen {
+    background-color: #333;
+  }
 video {
     height:100%;
     position:absolute;
@@ -124,3 +126,6 @@ h3 {
     color:white;
     font-size: 4vw;
 }
+*::-webkit-scrollbar { width: 0 !important }
+* { overflow: -moz-scrollbars-none; }
+* { -ms-overflow-style: none; }
