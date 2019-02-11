@@ -4,7 +4,7 @@ function ProcessParentMessage(message) {
 			screenfull.request();
 		}
 	}else{
-		document.getElementById("person-info").innerHTML = message;		
+		// document.getElementById("person-info").innerHTML = message;		
 	}
 }
 

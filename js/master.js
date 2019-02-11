@@ -63,16 +63,16 @@ displayBuffer = Lockr.get('displayBuffer') || [];
 var __CHILD_WINDOW_HANDLE = null;
 
 __CHILD_WINDOW_HANDLE = window.open('display.html', 'displayname', 'width=700,height=500,left=200,top=100');
-$("#open-display-btn").on('click', function() {
+$("#open-display-btn, #fullscreen").on('click', function() {
     $("#open-display-btn").trigger('blur');
 	__CHILD_WINDOW_HANDLE = window.open('display.html', 'displayname', 'width=700,height=500,left=200,top=100');
 });
 
-document.getElementById('fullscreen').addEventListener('click', () => {
-    if (__CHILD_WINDOW_HANDLE !== null) {
-        __CHILD_WINDOW_HANDLE.ProcessParentMessage('fullscreen');
-    }
-});
+// document.getElementById('fullscreen').addEventListener('click', () => {
+//     if (__CHILD_WINDOW_HANDLE !== null) {
+//         __CHILD_WINDOW_HANDLE.ProcessParentMessage('fullscreen');
+//     }
+// });
 document.addEventListener('contextmenu', event => event.preventDefault());
 
 /* End Initialize */
