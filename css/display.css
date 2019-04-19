@@ -10,34 +10,56 @@ html:fullscreen {
     background-color: #0f0;
   }
 #bottom {
-    position:fixed;
-    bottom:0;
-    right:0;
-    left:0;
-    height:200px;
-    background-color:#005A43;
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    height: 28vh;
+    background-color: #005A43;
 }
 
 #logo {
+    position: absolute;
+    bottom: 0px;
 }
 
 #logo .bu-b-color {
-    font-size:150px;
-    padding:20px;
+    position: absolute;
+    bottom: 0px;
+    font-size: 15vh;
+    padding: 0px;
+    margin-bottom: 4vh;
+    margin-left: 3vw;
 }
 #person-info {
-    text-align:center;
-    color:white;
-    font-family:sans-serif;
+    text-align: left;
+    margin-left: 25vh;
+    color: white;
+    font-family: sans-serif;
 }
 
 h1 {
-    font-size: 60px;
+    font-size: 9vh;
+    font-weight: bold;
+    margin-top: 4vh;
+    margin-bottom: 1vh;
 }
 h2 {
-    font-size: 40px;
+    font-size: 7vh;
+    margin-top: 2vh;
+    margin-bottom: 1vh;
 }
 
 *::-webkit-scrollbar { width: 0 !important }
 * { overflow: -moz-scrollbars-none; }
 * { -ms-overflow-style: none; }
+
+.swashes {
+    position: absolute;
+    left: 0px;
+    right: 0px;
+    bottom: 0px;
+    width: 100%;
+    display: inline;
+    height: 30vh;
+}

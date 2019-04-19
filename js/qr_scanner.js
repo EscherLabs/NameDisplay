@@ -35,7 +35,7 @@ process_qr_code = function (content) {
             }
             contentObj[field.name] = contentArray[index];
         })
-        alert(contentObj.first_name+" "+contentObj.last_name+"<h2>"+contentObj.degree+" "+contentObj.department+"</h2>",'success')
+        alert(contentObj.name+"<h2>"+contentObj.degree1+"</h2>",'success')
         updateQueue(contentObj);
     } catch (e) {
         alert('Error with Scan<br>Please Try Again','error')
