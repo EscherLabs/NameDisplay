@@ -16,8 +16,44 @@ var structuredFields = _.map(fields, Berry.normalizeItem);
 var labels = _.map(structuredFields,'name')
 var empty = _.zipObject(labels, _.map(labels, function() { return '';}))
 
-template = "<h1>{{name}}</h1><h2>{{degree1}}</h2>";
-queueTemplate = '<ul class="list-group">{{#.}}<li data-guid="{{guid}}" class="list-group-item"><div class="handle"></div><span style="position:absolute;white-space:nowrap;overflow:hidden;right:10px;left:60px">{{name}} - {{degree1}}</span><div class="btn btn-sm btn-danger parent-hover pull-right remove" style=";position:absolute;right:10px"><i class="fa fa-times"></i></div><div class="btn btn-sm btn-info parent-hover pull-right edit" style="position:absolute;right:50px"><i class="fa fa-pencil"></i></div><div class="btn btn-sm btn-warning parent-hover pull-right go" style="position:absolute;right:90px"><i class="fa fa-arrow-right"></i></div></li>{{/.}}</ul>';
+template = `
+<h1 {{#_longname}}class="shrinkname"{{/_longname}}>{{name}}</h1>
+{{#degree1}}
+    <h2 class="rotate{{_rotate}}" id="rotate1of{{_rotate}}">
+    {{degree1}}</h2>
+{{/degree1}}
+{{#degree2}}
+    <h2 class="rotate{{_rotate}}" id="rotate2of{{_rotate}}">
+    {{degree2}}</h2>
+{{/degree2}}
+{{#degree3}}
+    <h2 class="rotate{{_rotate}}" id="rotate3of{{_rotate}}">
+    {{degree3}}</h2>
+{{/degree3}}
+{{#degree4}}
+    <h2 class="rotate{{_rotate}}" id="rotate4of{{_rotate}}">
+    {{degree4}}</h2>
+{{/degree4}}`;
+queueTemplate = `
+<ul class="list-group">
+    {{#.}}
+    <li data-guid="{{guid}}" class="list-group-item">
+        <div class="handle"></div>
+        <span style="position:absolute;white-space:nowrap;overflow:hidden;right:10px;left:60px">
+            {{name}} - {{degree1}}
+        </span>
+        <div class="btn btn-sm btn-danger parent-hover pull-right remove" style=";position:absolute;right:10px">
+            <i class="fa fa-times"></i>
+        </div>
+        <div class="btn btn-sm btn-info parent-hover pull-right edit" style="position:absolute;right:50px">
+            <i class="fa fa-pencil"></i>
+        </div>
+        <div class="btn btn-sm btn-warning parent-hover pull-right go" style="position:absolute;right:90px">
+            <i class="fa fa-arrow-right"></i>
+        </div>
+    </li>
+    {{/.}}
+</ul>`;
 
 /* End Configuration */
 
@@ -168,11 +204,42 @@ $('body').on('click','.edit',function(e) {
     });
 })
 
+preprocess_data = function(data) {
+    if (typeof data.name === 'undefined') {
+        return data;
+    }
+    if (data.name.length > 30) {
+        data._longname = true;
+    }
+    if (data.degree1.length > 30) {
+        data._longmajor1 = true;
+    }
+    if (data.degree2.length > 30) {
+        data._longmajor2 = true;
+    }
+    if (data.degree3.length > 30) {
+        data._longmajor3 = true;
+    }
+    if (data.degree4.length > 30) {
+        data._longmajor4 = true;
+    }
+    if (data.degree4!=="") {
+        data._rotate = 4;
+    } else if (data.degree3!=="") {
+        data._rotate = 3;
+    } else if (data.degree2!=="") {
+        data._rotate = 2;
+    } 
+    return data;
+}
+
 setDisplay = function(data) {
     if(typeof data.guid !== 'undefined'){
         data.timestamp = moment().format();
         displayBuffer.unshift(data);
     }
+    data = preprocess_data(data);
+
     var rendered_text = Mustache.render(template, data);
     if (__CHILD_WINDOW_HANDLE !== null) {
         __CHILD_WINDOW_HANDLE.ProcessParentMessage(rendered_text);

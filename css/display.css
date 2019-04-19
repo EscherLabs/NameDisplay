@@ -44,10 +44,19 @@ h1 {
     margin-top: 4vh;
     margin-bottom: 1vh;
 }
+h1.shrinkname {
+    font-size: 6vh;
+    margin-top: 1vh;
+}
 h2 {
     font-size: 7vh;
     margin-top: 2vh;
     margin-bottom: 1vh;
+    position:absolute;
+}
+h2.shrinkmajor {
+    font-size: 4vh;
+    margin-top: 1vh;
 }
 
 *::-webkit-scrollbar { width: 0 !important }
@@ -62,4 +71,70 @@ h2 {
     width: 100%;
     display: inline;
     height: 30vh;
+}
+
+/* Experimental CSS Animations for Rotating Through Majors */
+
+/* Rotate 2 */
+.rotate2{
+    animation-name: rotate2;
+    animation-duration: 3s;
+    animation-iteration-count: infinite;
+    opacity:0;
+}
+#rotate1of2{ animation-delay: 0s; }
+#rotate2of2{ animation-delay: 1.5s; }
+@keyframes rotate2 {
+    0% {    
+        opacity:1;
+    }
+    45% {    
+        opacity:1;
+    }
+    50% {
+        opacity:0;
+    }
+}
+/* Rotate 3 */
+.rotate3{
+    animation-name: rotate3;
+    animation-duration: 3s;
+    animation-iteration-count: infinite;
+    opacity:0;
+}
+#rotate1of3{ animation-delay: 0s; }
+#rotate2of3{ animation-delay: 1s; }
+#rotate3of3{ animation-delay: 2s; }
+@keyframes rotate3 {
+    0% {    
+        opacity:1;
+    }
+    32% {    
+        opacity:1;
+    }
+    33.3% {
+        opacity:0; 
+    }
+}
+/* Rotate 4 */
+.rotate4{
+    animation-name: rotate3;
+    animation-duration: 3s;
+    animation-iteration-count: infinite;
+    opacity:0;
+}
+#rotate1of4{ animation-delay: 0s; }
+#rotate2of4{ animation-delay: 0.75s; }
+#rotate3of4{ animation-delay: 1.5s; }
+#rotate4of4{ animation-delay: 2.25s; }
+@keyframes rotate3 {
+    0% {    
+        opacity:1;
+    }
+    20% {    
+        opacity:1;
+    }
+    25% {
+        opacity:0;
+    }
 }
