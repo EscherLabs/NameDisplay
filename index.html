@@ -13,9 +13,7 @@
   </head>
   <body>
       <div id="left" class="" style="font-size:18px;padding:15px;color:#ddd">
-
         <div id="myForm"></div>
-
           <div id="upcoming-queue"></div>
       </div>
       <div id="top-right" class="quadrant">
@@ -24,28 +22,20 @@
         </div>
       </div>
       <div id="bottom-right" class="quadrant preview-screen">
-
-<div class="btn-group pull-right">
-  <button type="button" class="btn btn-primary" id="fullscreen"><i class="fa fa-arrows-alt"></i> Open Display Window<!--Full Screen Display Window--></button>
-  <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-    <span class="caret"></span>
-    <span class="sr-only">Toggle Dropdown</span>
-  </button>
-  <ul class="dropdown-menu">
-    <li><a href="#" onclick="resetQueue();"><i class="fa fa-ban"></i> Reset Queue History</a></li>
-    <li><a href="#" onclick="downloadHistory();"><i class="fa fa-download"></i> Download History</a></li>
-    <li><a href="#" id="open-display-btn"><i class="fa fa-external-link"></i> Open Display Window</a></li>
-  </ul>
-</div>
-
-
-        <!-- <h3>Instructions</h3> -->
-        <!-- <div>Open the "Display Window" and move it to the second screen.  
-          Scan QR Codes (or use the manual entry form) to populate the queue, 
-          and use the Right Arrow Key to advance to the next person.
-        </div> -->
-        <!-- <h1>Current Person</h1> -->
-        <h1>&nbsp;</h1>
+        <div style="text-align:right;">
+          <div class="btn-group">
+            <button type="button" class="btn btn-primary" id="fullscreen"><i class="fa fa-arrows-alt"></i> Open Display Window<!--Full Screen Display Window--></button>
+            <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              <span class="caret"></span>
+              <span class="sr-only">Toggle Dropdown</span>
+            </button>
+            <ul class="dropdown-menu">
+              <li><a href="#" onclick="resetQueue();"><i class="fa fa-ban"></i> Reset Queue History</a></li>
+              <li><a href="#" onclick="downloadHistory();"><i class="fa fa-download"></i> Download History</a></li>
+              <li><a href="#" id="open-display-btn"><i class="fa fa-external-link"></i> Open Display Window</a></li>
+            </ul>
+          </div>
+        </div>
         <div class="person-preview" id="current-person-preview"></div>
       </div>
     

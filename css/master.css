@@ -72,8 +72,9 @@ h3 {
     color:#eee;
 }
 .person-preview h2 {
-    font-size:40px;
-    color:#eee;
+    font-size: 24px;
+    margin: 5px 0px;
+    color: #eee;
 }
 #upcoming-queue {
     color:black;
