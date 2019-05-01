@@ -4,18 +4,30 @@ html {
 }
 
 body {
-    background-color:#0f0;
+    background-color:#00f;
 }
 html:fullscreen {
-    background-color: #0f0;
+    background-color: #00f;
   }
 #bottom {
     position: fixed;
     bottom: 0;
     right: 0;
     left: 0;
-    height: 28vh;
+    height: 20vh;
     background-color: #005A43;
+}
+
+#crop-center {
+    position:fixed;
+    /* Calculated as Percentage of Width (Based on a Crop width of ~80%) */
+    left:9.57vw;
+    width:80.86vw;
+    /* Calculated based on a fixed width of 1080px */
+    /* width:1552.5px;
+    left:183.75px; */
+    bottom:0;
+    height:20vh;
 }
 
 #logo {
@@ -33,7 +45,7 @@ html:fullscreen {
 }
 #person-info {
     text-align: left;
-    margin-left: 25vh;
+    margin-left: 2vw;
     color: white;
     font-family: sans-serif;
 }
@@ -41,22 +53,22 @@ html:fullscreen {
 h1 {
     font-size: 9vh;
     font-weight: bold;
-    margin-top: 4vh;
-    margin-bottom: 1vh;
+    margin-top: 1vh;
+    margin-bottom: 0vh;
 }
 h1.shrinkname {
-    font-size: 6vh;
-    margin-top: 1vh;
+    font-size: 5.5vh;
+    margin-bottom: 3vh;
+    margin-top: 2vh;
 }
 h2 {
-    font-size: 7vh;
-    margin-top: 2vh;
-    margin-bottom: 1vh;
+    font-size: 6vh;
+    margin-top: 0.5vh;
+    margin-bottom: 0vh;
     position:absolute;
 }
 h2.shrinkmajor {
-    font-size: 4vh;
-    margin-top: 1vh;
+    font-size: 4.5vh;
 }
 
 *::-webkit-scrollbar { width: 0 !important }
@@ -70,7 +82,8 @@ h2.shrinkmajor {
     bottom: 0px;
     width: 100%;
     display: inline;
-    height: 30vh;
+    height:24vh;
+    z-index:-10;
 }
 
 /* Experimental CSS Animations for Rotating Through Majors */
@@ -119,14 +132,14 @@ h2.shrinkmajor {
 /* Rotate 4 */
 .rotate4{
     animation-name: rotate4;
-    animation-duration: 3s;
+    animation-duration: 4s;
     animation-iteration-count: infinite;
     opacity:0;
 }
 #rotate1of4{ animation-delay: 0s; }
-#rotate2of4{ animation-delay: 0.75s; }
-#rotate3of4{ animation-delay: 1.5s; }
-#rotate4of4{ animation-delay: 2.25s; }
+#rotate2of4{ animation-delay: 1s; }
+#rotate3of4{ animation-delay: 2s; }
+#rotate4of4{ animation-delay: 3s; }
 @keyframes rotate4 {
     0% {    
         opacity:1;

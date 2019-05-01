@@ -19,19 +19,19 @@ var empty = _.zipObject(labels, _.map(labels, function() { return '';}))
 template = `
 <h1 {{#_longname}}class="shrinkname"{{/_longname}}>{{name}}</h1>
 {{#degree1}}
-    <h2 class="rotate{{_rotate}}" id="rotate1of{{_rotate}}">
+    <h2 class="rotate{{_rotate}} {{#_longmajor1}}shrinkmajor{{/_longmajor1}}" id="rotate1of{{_rotate}}">
     {{degree1}}</h2>
 {{/degree1}}
 {{#degree2}}
-    <h2 class="rotate{{_rotate}}" id="rotate2of{{_rotate}}">
+    <h2 class="rotate{{_rotate}} {{#_longmajor2}}shrinkmajor{{/_longmajor2}}" id="rotate2of{{_rotate}}">
     {{degree2}}</h2>
 {{/degree2}}
 {{#degree3}}
-    <h2 class="rotate{{_rotate}}" id="rotate3of{{_rotate}}">
+    <h2 class="rotate{{_rotate}} {{#_longmajor3}}shrinkmajor{{/_longmajor3}}" id="rotate3of{{_rotate}}">
     {{degree3}}</h2>
 {{/degree3}}
 {{#degree4}}
-    <h2 class="rotate{{_rotate}}" id="rotate4of{{_rotate}}">
+    <h2 class="rotate{{_rotate}} {{#_longmajor4}}shrinkmajor{{/_longmajor4}}" id="rotate4of{{_rotate}}">
     {{degree4}}</h2>
 {{/degree4}}`;
 queueTemplate = `
@@ -210,19 +210,19 @@ preprocess_data = function(data) {
     }
     if (data.name.length > 30) {
         data._longname = true;
-    }
-    if (data.degree1.length > 30) {
+    } else {data._longname = false;}
+    if (data.degree1.length > 40) {
         data._longmajor1 = true;
-    }
-    if (data.degree2.length > 30) {
+    } else {data._longmajor1 = false;}
+    if (data.degree2.length > 40) {
         data._longmajor2 = true;
-    }
-    if (data.degree3.length > 30) {
+    } else {data._longmajor2 = false;}
+    if (data.degree3.length > 40) {
         data._longmajor3 = true;
-    }
-    if (data.degree4.length > 30) {
+    } else {data._longmajor3 = false;}
+    if (data.degree4.length > 40) {
         data._longmajor4 = true;
-    }
+    } else {data._longmajor4 = false;}
     if (data.degree4!=="") {
         data._rotate = 4;
     } else if (data.degree3!=="") {
