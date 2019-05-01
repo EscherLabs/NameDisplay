@@ -102,10 +102,10 @@ displayBuffer = Lockr.get('displayBuffer') || [];
 
 var __CHILD_WINDOW_HANDLE = null;
 
-__CHILD_WINDOW_HANDLE = window.open('display.html', 'displayname', 'width=720,height=405,left=200,top=100');
+__CHILD_WINDOW_HANDLE = window.open('display.html', 'displayname', 'width=720,height=427,left=200,top=100'); /* Screen height should be 405px + 22px for extra headers */
 $("#open-display-btn, #fullscreen").on('click', function() {
     $("#open-display-btn").trigger('blur');
-	__CHILD_WINDOW_HANDLE = window.open('display.html', 'displayname', 'width=720,height=405,left=200,top=100');
+	__CHILD_WINDOW_HANDLE = window.open('display.html', 'displayname', 'width=720,height=427,left=200,top=100'); /* Screen height should be 405px + 22px for extra headers */
 });
 
 // document.getElementById('fullscreen').addEventListener('click', () => {
