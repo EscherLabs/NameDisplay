@@ -8,7 +8,7 @@ fields = [
     {name:'advisor', label: 'Advisor'},
     {name:'level', label: 'Degree Level'},
     {name:'school', label: 'School'},
-    {label: 'Force', type:'checkbox',show:false,truestate:'true',falsestate:'false'}
+    {label: 'Force', type:'checkbox',show:false,truestate:'true',falsestate:'false',value:'false'}
 ];
 
 var structuredFields = _.map(fields, Berry.normalizeItem);
