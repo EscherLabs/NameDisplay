@@ -211,23 +211,24 @@ preprocess_data = function(data) {
     if (data.name.length > 30) {
         data._longname = true;
     } else {data._longname = false;}
-    if (data.degree1.length > 40) {
+    if (typeof data.degree1 !== 'undefined' && data.degree1.length > 40) {
         data._longmajor1 = true;
     } else {data._longmajor1 = false;}
-    if (data.degree2.length > 40) {
+    if (typeof data.degree2 !== 'undefined' && data.degree2.length > 40) {
         data._longmajor2 = true;
     } else {data._longmajor2 = false;}
-    if (data.degree3.length > 40) {
+    if (typeof data.degree3 !== 'undefined' && data.degree3.length > 40) {
         data._longmajor3 = true;
     } else {data._longmajor3 = false;}
-    if (data.degree4.length > 40) {
+    if (typeof data.degree4 !== 'undefined' && data.degree4.length > 40) {
         data._longmajor4 = true;
     } else {data._longmajor4 = false;}
-    if (data.degree4!=="") {
+    
+    if (typeof data.degree4 !== 'undefined' && data.degree4!=="") {
         data._rotate = 4;
-    } else if (data.degree3!=="") {
+    } else if (typeof data.degree3 !== 'undefined' && data.degree3!=="") {
         data._rotate = 3;
-    } else if (data.degree2!=="") {
+    } else if (typeof data.degree2 !== 'undefined' && data.degree2!=="") {
         data._rotate = 2;
     } 
     return data;
