@@ -8,7 +8,6 @@ fields = [
     {name:'advisor', label: 'Advisor'},
     {name:'level', label: 'Degree Level'},
     {name:'school', label: 'School'},
-    {name:'unique_id', label: 'Unique ID', type:'hidden'},
     {label: 'Force', type:'checkbox',show:false,truestate:'true',falsestate:'false'}
 ];
 
@@ -252,7 +251,7 @@ setDisplay = function(data) {
 updateQueue = function(item) {
     if(typeof item !== 'undefined'){
         var data = item;
-        Berries.form.populate($.extend({},item, {name: '',unique_id: '',force: 'false'}));
+        Berries.form.populate($.extend({},item, {name: '',force: 'false'}));
 
         data.guid = generateUUID();
         displayQueue.push(item);
