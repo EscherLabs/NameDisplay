@@ -48,6 +48,7 @@ html:fullscreen {
     margin-left: 2vw;
     color: white;
     font-family: sans-serif;
+    white-space: nowrap;
 }
 
 h1 {
