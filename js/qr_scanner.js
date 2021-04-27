@@ -31,6 +31,7 @@ process_qr_code = function (content) {
             if (typeof contentArray[index] !== 'undefined') {
                 contentArray[index] = contentArray[index].replaceAll(";", ",");
                 contentArray[index] = contentArray[index].replaceAll("Dual Diploma Program", "DDP");
+                contentArray[index] = contentArray[index].replaceAll("Middle East Technical University", "METU");
             }
 
             if (_.includes(['NFN', 'NLN', 'NDN', 'null'], contentArray[index])) {

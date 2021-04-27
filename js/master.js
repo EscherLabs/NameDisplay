@@ -165,7 +165,7 @@ function checkKey(e) {
     case 27: /* Escape Key */
         e.preventDefault();
         e.stopPropagation();        
-        setDisplay({'name':'Binghamton University','degree1':'Class of 2019'});
+        setDisplay({'name':'Binghamton University','degree1':'Class of 2021'});
         break;
     }			
 }
