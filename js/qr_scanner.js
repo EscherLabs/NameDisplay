@@ -23,10 +23,16 @@ alert = function(content,status) {
 
 process_qr_code = function (content) {
     beep();
-    try {
+    // try {
         var contentArray = content.split(',');
         var contentObj = {};
         _.each(structuredFields, function(field, index){
+            // Replace Certain Strings...
+            if (typeof contentArray[index] !== 'undefined') {
+                contentArray[index] = contentArray[index].replaceAll(";", ",");
+                contentArray[index] = contentArray[index].replaceAll("Dual Diploma Program", "DDP");
+            }
+
             if (_.includes(['NFN', 'NLN', 'NDN', 'null'], contentArray[index])) {
                 contentArray[index] = '';
             }
@@ -37,9 +43,9 @@ process_qr_code = function (content) {
         })
         alert(contentObj.name+"<h2>"+contentObj.degree1+"</h2>",'success')
         updateQueue(contentObj);
-    } catch (e) {
-        alert('Error with Scan<br>Please Try Again','error')
-    }
+    // } catch (e) {
+    //     alert('Error with Scan<br>Please Try Again','error')
+    // }
 };
 
 /* Physical QR Code Scanner */
