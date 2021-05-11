@@ -7,7 +7,7 @@
  - RIGHT Arrow Advances the Queue
  - LEFT Arrow Reverses the Queue
  - UP/DOWN Arrows Clears the Screen
- - ESC Key Brings up "Binghamton University Class of 2019"
+ - ESC Key Brings up "Binghamton University Class of 2021"
 
 ### Pre-Ceremony Checklist
  - Make sure the computer is plugged in and is charging.  Note: the little battery icon in the top right corner should have a "lightning bolt" on it indicating that the battery is actively charging.  
@@ -22,7 +22,7 @@
  - Clear the screen (UP/DOWN Arrow)
 
 ### Post-Ceremony Checklist
- - Put up "Binghamton University Class of 2019" (ESC Key)
+ - Put up "Binghamton University Class of 2021" (ESC Key)
  - Download the History CSV file (for the previous ceremony as is relevant) and store it somewhere secure.
  - Reset the Queue History
 
