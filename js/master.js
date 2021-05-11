@@ -5,8 +5,8 @@ fields = [
     {name:'degree2', label: 'Degree 2'},
     {name:'degree3', label: 'Degree 3'},
     {name:'degree4', label: 'Degree 4'},
-    {name:'first_name', label: 'First Name'},
     {name:'last_name', label: 'Last Name'},
+    {name:'first_name', label: 'First Name'},
     {name:'ceremony', label: 'Ceremony'},
     {name:'school', label: 'School'},
     {label: 'Force', type:'checkbox',show:false,truestate:'true',falsestate:'false',value:'false'}
