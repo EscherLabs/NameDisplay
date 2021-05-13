@@ -54,19 +54,20 @@ html:fullscreen {
 h1 {
     font-size: 9vh;
     font-weight: bold;
-    margin-top: 1vh;
+    margin-top: 5vh;
     margin-bottom: 0vh;
 }
 h1.shrinkname {
     font-size: 5.5vh;
     margin-bottom: 3vh;
-    margin-top: 2vh;
+    margin-top: 6vh;
 }
 h2 {
     font-size: 6vh;
     margin-top: 0.5vh;
     margin-bottom: 0vh;
     position:absolute;
+    display:none;
 }
 h2.shrinkmajor {
     font-size: 4.5vh;
