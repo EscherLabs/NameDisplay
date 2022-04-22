@@ -208,6 +208,21 @@ preprocess_data = function(data) {
     if (typeof data.name === 'undefined') {
         return data;
     }
+
+    if (typeof data.degree1 === 'undefined' || data.degree1 === '') {
+        data.degree1 = data.degree2;
+        data.degree2 = data.degree3;
+        data.degree3 = data.degree4;
+    }
+    if (typeof data.degree2 === 'undefined' || data.degree2 === '') {
+        data.degree2 = data.degree3;
+        data.degree3 = data.degree4;
+    }
+    if (typeof data.degree3 === 'undefined' || data.degree3 === '') {
+        data.degree3 = data.degree4;
+        data.degree4 = '';
+    }
+
     if (data.name.length > 30) {
         data._longname = true;
     } else {data._longname = false;}
