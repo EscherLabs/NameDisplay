@@ -5,11 +5,11 @@ fields = [
     {name:'degree2', label: 'Degree 2'},
     {name:'degree3', label: 'Degree 3'},
     {name:'degree4', label: 'Degree 4'},
-    {name:'last_name', label: 'Last Name'},
-    {name:'first_name', label: 'First Name'},
-    {name:'ceremony', label: 'Ceremony'},
-    {name:'school', label: 'School'},
-    {label: 'Force', type:'checkbox',show:false,truestate:'true',falsestate:'false',value:'false'}
+    // {name:'last_name', label: 'Last Name'},
+    // {name:'first_name', label: 'First Name'},
+    // {name:'ceremony', label: 'Ceremony'},
+    // {name:'school', label: 'School'},
+    // {label: 'Force', type:'checkbox',show:false,truestate:'true',falsestate:'false',value:'false'}
 ];
 
 var structuredFields = _.map(fields, Berry.normalizeItem);
@@ -166,7 +166,7 @@ function checkKey(e) {
     case 27: /* Escape Key */
         e.preventDefault();
         e.stopPropagation();        
-        setDisplay({'name':'Binghamton University','degree1':'Class of 2021'});
+        setDisplay({'name':'Binghamton University','degree1':'Class of 2022'});
         break;
     }			
 }
