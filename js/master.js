@@ -19,19 +19,19 @@ var empty = _.zipObject(labels, _.map(labels, function() { return '';}))
 template = `
 <h1 {{#_longname}}class="shrinkname"{{/_longname}}>{{name}}</h1>
 {{#degree1}}
-    <h2 class="rotate{{_rotate}} {{#_longmajor1}}shrinkmajor{{/_longmajor1}}" id="rotate1of{{_rotate}}">
+    <h2 class="rotate{{_rotate}} {{#_longmajor1}}shrinkmajor{{/_longmajor1}} {{#_extralongmajor1}}supershrinkmajor{{/_extralongmajor1}}" id="rotate1of{{_rotate}}">
     {{degree1}}</h2>
 {{/degree1}}
 {{#degree2}}
-    <h2 class="rotate{{_rotate}} {{#_longmajor2}}shrinkmajor{{/_longmajor2}}" id="rotate2of{{_rotate}}">
+    <h2 class="rotate{{_rotate}} {{#_longmajor2}}shrinkmajor{{/_longmajor2}} {{#_extralongmajor2}}supershrinkmajor{{/_extralongmajor2}}" id="rotate2of{{_rotate}}">
     {{degree2}}</h2>
 {{/degree2}}
 {{#degree3}}
-    <h2 class="rotate{{_rotate}} {{#_longmajor3}}shrinkmajor{{/_longmajor3}}" id="rotate3of{{_rotate}}">
+    <h2 class="rotate{{_rotate}} {{#_longmajor3}}shrinkmajor{{/_longmajor3}} {{#_extralongmajor3}}supershrinkmajor{{/_extralongmajor3}}" id="rotate3of{{_rotate}}">
     {{degree3}}</h2>
 {{/degree3}}
 {{#degree4}}
-    <h2 class="rotate{{_rotate}} {{#_longmajor4}}shrinkmajor{{/_longmajor4}}" id="rotate4of{{_rotate}}">
+    <h2 class="rotate{{_rotate}} {{#_longmajor4}}shrinkmajor{{/_longmajor4}} {{#_extralongmajor4}}supershrinkmajor{{/_extralongmajor4}}" id="rotate4of{{_rotate}}">
     {{degree4}}</h2>
 {{/degree4}}`;
 queueTemplate = `
@@ -226,18 +226,31 @@ preprocess_data = function(data) {
     if (data.name.length > 30) {
         data._longname = true;
     } else {data._longname = false;}
-    if (typeof data.degree1 !== 'undefined' && data.degree1.length > 40) {
+    if (typeof data.degree1 !== 'undefined' && data.degree1.length > 40 && data.degree1.length <= 67) {
         data._longmajor1 = true;
     } else {data._longmajor1 = false;}
-    if (typeof data.degree2 !== 'undefined' && data.degree2.length > 40) {
+    if (typeof data.degree2 !== 'undefined' && data.degree2.length > 40 && data.degree2.length <= 67) {
         data._longmajor2 = true;
     } else {data._longmajor2 = false;}
-    if (typeof data.degree3 !== 'undefined' && data.degree3.length > 40) {
+    if (typeof data.degree3 !== 'undefined' && data.degree3.length > 40 && data.degree3.length <= 67) {
         data._longmajor3 = true;
     } else {data._longmajor3 = false;}
-    if (typeof data.degree4 !== 'undefined' && data.degree4.length > 40) {
+    if (typeof data.degree4 !== 'undefined' && data.degree4.length > 40 && data.degree4.length <= 67) {
         data._longmajor4 = true;
     } else {data._longmajor4 = false;}
+    if (typeof data.degree1 !== 'undefined' && data.degree1.length > 67) {
+        data._extralongmajor1 = true;
+    } else {data._extralongmajor1 = false;}
+    if (typeof data.degree2 !== 'undefined' && data.degree2.length > 67) {
+        data._extralongmajor2 = true;
+    } else {data._extralongmajor2 = false;}
+    if (typeof data.degree3 !== 'undefined' && data.degree3.length > 67) {
+        data._extralongmajor3 = true;
+    } else {data._extralongmajor3 = false;}
+    if (typeof data.degree4 !== 'undefined' && data.degree4.length > 67) {
+        data._extralongmajor4 = true;
+    } else {data._extralongmajor4 = false;}
+
     
     if (typeof data.degree4 !== 'undefined' && data.degree4!=="") {
         data._rotate = 4;

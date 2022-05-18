@@ -71,6 +71,9 @@ h2 {
 h2.shrinkmajor {
     font-size: 4.5vh;
 }
+h2.supershrinkmajor {
+    font-size: 4vh;
+}
 
 *::-webkit-scrollbar { width: 0 !important }
 * { overflow: -moz-scrollbars-none; }
