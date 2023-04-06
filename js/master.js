@@ -5,6 +5,7 @@ fields = [
     {name:'degree2', label: 'Degree 2'},
     {name:'degree3', label: 'Degree 3'},
     {name:'degree4', label: 'Degree 4'},
+    {name:'degree5', label: 'Degree 5'},
     // {name:'last_name', label: 'Last Name'},
     // {name:'first_name', label: 'First Name'},
     // {name:'ceremony', label: 'Ceremony'},
@@ -33,7 +34,12 @@ template = `
 {{#degree4}}
     <h2 class="rotate{{_rotate}} {{#_longmajor4}}shrinkmajor{{/_longmajor4}} {{#_extralongmajor4}}supershrinkmajor{{/_extralongmajor4}}" id="rotate4of{{_rotate}}">
     {{degree4}}</h2>
-{{/degree4}}`;
+{{/degree4}}
+{{#degree5}}
+    <h2 class="rotate{{_rotate}} {{#_longmajor5}}shrinkmajor{{/_longmajor5}} {{#_extralongmajor5}}supershrinkmajor{{/_extralongmajor5}}" id="rotate4of{{_rotate}}">
+    {{degree5}}</h2>
+{{/degree5}}`;
+;
 queueTemplate = `
 <ul class="list-group">
     {{#.}}
@@ -209,18 +215,51 @@ preprocess_data = function(data) {
         return data;
     }
 
+    var degrees = [];
+    if (typeof data.degree1 !== 'undefined' && data.degree1 !== '') {
+        degrees.push(data.degree1);
+    }
+    if (typeof data.degree2 !== 'undefined' && data.degree2 !== '') {
+        degrees.push(data.degree2);
+    }
+    if (typeof data.degree3 !== 'undefined' && data.degree3 !== '') {
+        degrees.push(data.degree3);
+    }
+    if (typeof data.degree4 !== 'undefined' && data.degree4 !== '') {
+        degrees.push(data.degree4);
+    }
+    if (typeof data.degree5 !== 'undefined' && data.degree5 !== '') {
+        degrees.push(data.degree5);
+    }
+    for (var degree_num=1;degree_num<=5;degree_num++) {
+        if (degrees[degree_num-1] != undefined) {
+            data['degree'+degree_num] = degrees[degree_num-1];
+        } else {
+            data['degree'+degree_num] = '';
+        }
+    }
+
     if (typeof data.degree1 === 'undefined' || data.degree1 === '') {
         data.degree1 = data.degree2;
         data.degree2 = data.degree3;
         data.degree3 = data.degree4;
+        data.degree4 = data.degree5;
+        data.degree5 = '';
     }
     if (typeof data.degree2 === 'undefined' || data.degree2 === '') {
         data.degree2 = data.degree3;
         data.degree3 = data.degree4;
+        data.degree4 = data.degree5;
+        data.degree5 = '';
     }
     if (typeof data.degree3 === 'undefined' || data.degree3 === '') {
         data.degree3 = data.degree4;
-        data.degree4 = '';
+        data.degree4 = data.degree5;
+        data.degree5 = '';
+    }
+    if (typeof data.degree4 === 'undefined' || data.degree4 === '') {
+        data.degree4 = data.degree5;
+        data.degree5 = '';
     }
 
     if (data.name.length > 30) {
@@ -238,6 +277,9 @@ preprocess_data = function(data) {
     if (typeof data.degree4 !== 'undefined' && data.degree4.length > 40 && data.degree4.length <= 67) {
         data._longmajor4 = true;
     } else {data._longmajor4 = false;}
+    if (typeof data.degree5 !== 'undefined' && data.degree5.length > 40 && data.degree5.length <= 67) {
+        data._longmajor5 = true;
+    } else {data._longmajor5 = false;}
     if (typeof data.degree1 !== 'undefined' && data.degree1.length > 67) {
         data._extralongmajor1 = true;
     } else {data._extralongmajor1 = false;}
@@ -250,9 +292,16 @@ preprocess_data = function(data) {
     if (typeof data.degree4 !== 'undefined' && data.degree4.length > 67) {
         data._extralongmajor4 = true;
     } else {data._extralongmajor4 = false;}
+    if (typeof data.degree5 !== 'undefined' && data.degree5.length > 67) {
+        data._extralongmajor5 = true;
+    } else {data._extralongmajor5 = false;}
+
+    debugger;
 
     
-    if (typeof data.degree4 !== 'undefined' && data.degree4!=="") {
+    if (typeof data.degree5 !== 'undefined' && data.degree5!=="") {
+        data._rotate = 5;
+    } else if (typeof data.degree4 !== 'undefined' && data.degree4!=="") {
         data._rotate = 4;
     } else if (typeof data.degree3 !== 'undefined' && data.degree3!=="") {
         data._rotate = 3;
