@@ -18,7 +18,7 @@ var labels = _.map(structuredFields,'name')
 var empty = _.zipObject(labels, _.map(labels, function() { return '';}))
 
 template = `
-<h1 {{#_longname}}class="shrinkname"{{/_longname}}>{{name}}</h1>
+<h1 {{#_longname}}class="shrinkname1"{{/_longname}}{{#_extralongname}}class="shrinkname2"{{/_extralongname}}>{{name}}</h1>
 {{#degree1}}
     <h2 class="rotate{{_rotate}} {{#_longmajor1}}shrinkmajor{{/_longmajor1}} {{#_extralongmajor1}}supershrinkmajor{{/_extralongmajor1}}" id="rotate1of{{_rotate}}">
     {{degree1}}</h2>
@@ -261,10 +261,17 @@ preprocess_data = function(data) {
         data.degree4 = data.degree5;
         data.degree5 = '';
     }
-
+    
     if (data.name.length > 30) {
-        data._longname = true;
-    } else {data._longname = false;}
+        data._longname = false; 
+        data._extralongname = true;
+    } else if (data.name.length > 25) {
+        data._longname = true; 
+        data._extralongname = false;
+    } else {
+        data._longname = false; 
+        data._extralongname = false;
+        }
     if (typeof data.degree1 !== 'undefined' && data.degree1.length > 40 && data.degree1.length <= 67) {
         data._longmajor1 = true;
     } else {data._longmajor1 = false;}
