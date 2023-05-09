@@ -74,10 +74,10 @@ h2 {
     position:absolute;
 }
 h2.shrinkmajor {
-    font-size: 4.5vh;
+    font-size: 4.2vh;
 }
 h2.supershrinkmajor {
-    font-size: 4vh;
+    font-size: 3.8vh;
 }
 
 *::-webkit-scrollbar { width: 0 !important }
