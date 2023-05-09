@@ -67,19 +67,22 @@ h1.shrinkname2 {
     font-size: 5.5vh;
     margin-bottom: 2vh;
     margin-top: 2vh;
+    filter: drop-shadow(3px 3px 3px black);
 }
 h2 {
     font-size: 6vh;
     margin-top: 0.5vh;
     margin-bottom: 0vh;
     position:absolute;
-    filter: drop-shadow(4px 4px 4px black);
+    filter: drop-shadow(3px 3px 3px black);
 }
 h2.shrinkmajor {
     font-size: 4.2vh;
+    filter: drop-shadow(2.5px 2.5px 2.5px black);
 }
 h2.supershrinkmajor {
     font-size: 3.8vh;
+    filter: drop-shadow(2.5px 2.5px 2.5px black);
 }
 
 *::-webkit-scrollbar { width: 0 !important }
