@@ -56,6 +56,7 @@ h1 {
     font-weight: bold;
     margin-top: 1vh;
     margin-bottom: 0vh;
+    filter: drop-shadow(4px 4px 4px black);
 }
 h1.shrinkname1 {
     font-size: 8vh;
@@ -72,6 +73,7 @@ h2 {
     margin-top: 0.5vh;
     margin-bottom: 0vh;
     position:absolute;
+    filter: drop-shadow(4px 4px 4px black);
 }
 h2.shrinkmajor {
     font-size: 4.2vh;
